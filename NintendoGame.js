@@ -79,7 +79,6 @@ function loadROM(files)
 		}
 		catch(err)
 		{
-		alert(err);
 		}
 	}
 
@@ -336,7 +335,6 @@ window.onblur = function()
 		}
 		catch(err)
 		{
-		alert(err);
 		}
 	}
 
