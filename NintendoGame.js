@@ -103,11 +103,17 @@ function restartROM()
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (isMobileDevice()==true)
 			{
+			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_reload")[0].style.display = "none";
+
 			// SHOWING THE RELOAD ICON FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_reload_mobile")[0].style.display = "block";
 
 			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
-			document.getElementsByClassName("gui_reload")[0].style.display = "none";
+			document.getElementsByClassName("gui_upload")[0].style.display = "none";
+
+			// SHOWING THE UPLOAD ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_upload_mobile")[0].style.display = "block";
 
 			// SHOWING THE VIRTUAL JOYSTICK AND BUTTONS FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_joystick")[0].style.display = "block";
@@ -324,6 +330,7 @@ window.onload = function()
 	document.addEventListener("dblclick", goBackButtonResetIncrement, false);
 	document.addEventListener("mousemove", goBackButtonResetIncrement, false);
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
+	document.getElementsByClassName("gui_upload_mobile")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
 	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
 	}
