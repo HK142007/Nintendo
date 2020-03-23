@@ -80,6 +80,9 @@ function restartROM()
 
 		if (isMobileDevice()==true)
 			{
+			document.getElementsByClassName("gui_reload_mobile")[0].style.display = "block";
+			document.getElementsByClassName("gui_reload")[0].style.display = "none";
+
 			document.getElementsByClassName("gui_joystick")[0].style.display = "block";
 			document.getElementsByClassName("gui_nintendo_keyselect")[0].style.display = "block";
 			document.getElementsByClassName("gui_nintendo_keyselect")[0].addEventListener("touchstart",function(event){try{NintendoEmulator.keyboard.state1[NintendoEmulator.keyboard.keys.KEY_SELECT]=0x41}catch(err){}});
@@ -232,4 +235,5 @@ window.onload = function()
 	{
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
+	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
 	}
