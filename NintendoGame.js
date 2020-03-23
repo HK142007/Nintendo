@@ -323,6 +323,39 @@ function goBackButtonTimerIncrement()
 		}
 	}
 
+window.onblur = function()
+	{
+	try
+		{
+		// CHECKING IF A GAME IS RUNNING
+		if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+			{
+			// STOPING THE GAME
+			NintendoEmulator.stop();
+			}
+		}
+		catch(err)
+		{
+		alert(err);
+		}
+	}
+
+window.onfocus = function()
+	{
+	try
+		{
+		// CHECKING IF A GAME IS RUNNING
+		if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+			{
+			// RESUMING THE GAME
+			NintendoEmulator.start();
+			}
+		}
+		catch(err)
+		{
+		}
+	}
+
 window.onload = function()
 	{
 	setInterval(goBackButtonTimerIncrement, 1000);
