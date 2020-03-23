@@ -97,7 +97,10 @@ function restartROM()
 			document.getElementsByClassName("gui_nintendo_keyb")[0].addEventListener("touchstart",function(event){try{NintendoEmulator.keyboard.state1[NintendoEmulator.keyboard.keys.KEY_B]=0x41}catch(err){}});
 			document.getElementsByClassName("gui_nintendo_keyb")[0].addEventListener("touchend",function(event){try{NintendoEmulator.keyboard.state1[NintendoEmulator.keyboard.keys.KEY_B]=0x40}catch(err){}});
 
-			showVirtualJoystick();
+			if (NintendoJoystick==null)
+				{
+				showVirtualJoystick();
+				}
 			}
 		}
 	}
