@@ -42,6 +42,24 @@ var CTRLS_IDLE = 0;
 var NintendoJoystick = null;
 var NintendoEmulator = new JSNES({"ui":JSNESUI()});
 
+function soundOffOn()
+	{
+	try
+		{
+		if (NintendoEmulator.opts.emulateSound==true)
+			{
+			NintendoEmulator.opts.emulateSound = false;
+			}
+			else
+			{
+			NintendoEmulator.opts.emulateSound = true;
+			}
+		}
+		catch(err)
+		{
+		}
+	}
+
 function loadROM(files)
 	{
 	try
@@ -92,9 +110,6 @@ function restartROM()
 		// HIDING THE WELCOME WINDOW
 		document.getElementsByClassName("gui_window")[0].style.display = "none";
 
-		// SHOWING THE RELOAD ICON
-		document.getElementsByClassName("gui_reload")[0].style.display = "block";
-
 		// SETTING THE FILE CONTENT FOR THE EMULATOR
 		NintendoEmulator.loadRom(ROMDATA);
 		NintendoEmulator.start();
@@ -103,16 +118,19 @@ function restartROM()
 		if (isMobileDevice()==true)
 			{
 			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
-			document.getElementsByClassName("gui_reload")[0].style.display = "none";
-
-			// SHOWING THE RELOAD ICON FOR MOBILE DEVICES
-			document.getElementsByClassName("gui_reload_mobile")[0].style.display = "block";
+			document.getElementsByClassName("gui_upload")[0].style.display = "none";
 
 			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
-			document.getElementsByClassName("gui_upload")[0].style.display = "none";
+			document.getElementsByClassName("gui_reload")[0].style.display = "none";
 
 			// SHOWING THE UPLOAD ICON FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_upload_mobile")[0].style.display = "block";
+
+			// SHOWING THE SOUND ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_sound_mobile")[0].style.display = "block";
+
+			// SHOWING THE RELOAD ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_reload_mobile")[0].style.display = "block";
 
 			// SHOWING THE VIRTUAL JOYSTICK AND BUTTONS FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_joystick")[0].style.display = "block";
@@ -135,6 +153,14 @@ function restartROM()
 				// CREATING THE JOYSTICK
 				showVirtualJoystick();
 				}
+			}
+			else
+			{
+			// SHOWING THE RELOAD ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_reload")[0].style.display = "block";
+
+			// SHOWING THE SOUND ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_sound")[0].style.display = "block";
 			}
 		}
 	}
@@ -285,6 +311,9 @@ function goBackButtonResetIncrement()
 				// SHOWING THE UPLOAD BUTTON
 				document.getElementsByClassName("gui_upload")[0].style.display = "block";
 
+				// SHOWING THE SOUND BUTTON
+				document.getElementsByClassName("gui_sound")[0].style.display = "block";
+
 				// SHOWING THE RELOAD BUTTON
 				document.getElementsByClassName("gui_reload")[0].style.display = "block";
 				}
@@ -310,6 +339,9 @@ function goBackButtonTimerIncrement()
 					{
 					// HIDING THE UPLOAD BUTTON
 					document.getElementsByClassName("gui_upload")[0].style.display = "none";
+
+					// HIDING THE SOUND BUTTON
+					document.getElementsByClassName("gui_sound")[0].style.display = "none";
 
 					// HIDING THE RELOAD BUTTON
 					document.getElementsByClassName("gui_reload")[0].style.display = "none";
@@ -362,6 +394,8 @@ window.onload = function()
 	document.addEventListener("mousemove", goBackButtonResetIncrement, false);
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
 	document.getElementsByClassName("gui_upload_mobile")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
+	document.getElementsByClassName("gui_sound")[0].addEventListener("click",function(event){soundOffOn()});
+	document.getElementsByClassName("gui_sound_mobile")[0].addEventListener("click",function(event){soundOffOn()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
 	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
 	}
