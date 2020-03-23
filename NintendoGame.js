@@ -330,7 +330,7 @@ window.onblur = function()
 		// CHECKING IF A GAME IS RUNNING
 		if (document.getElementsByClassName("gui_background")[0].style.display=="none")
 			{
-			// STOPING THE GAME
+			// PAUSING THE GAME
 			NintendoEmulator.stop();
 			}
 		}
