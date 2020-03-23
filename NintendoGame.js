@@ -29,7 +29,7 @@ JSNES.PPU=function(t){this.nes=t,this.vramMem=null,this.spriteMem=null,this.vram
 JSNES.ROM=function(e){this.nes=e,this.mapperName=new Array(92);for(var r=0;r<92;r++)this.mapperName[r]="Unknown Mapper";this.mapperName[0]="Direct Access",this.mapperName[1]="Nintendo MMC1",this.mapperName[2]="UNROM",this.mapperName[3]="CNROM",this.mapperName[4]="Nintendo MMC3",this.mapperName[5]="Nintendo MMC5",this.mapperName[6]="FFE F4xxx",this.mapperName[7]="AOROM",this.mapperName[8]="FFE F3xxx",this.mapperName[9]="Nintendo MMC2",this.mapperName[10]="Nintendo MMC4",this.mapperName[11]="Color Dreams Chip",this.mapperName[12]="FFE F6xxx",this.mapperName[15]="100-in-1 switch",this.mapperName[16]="Bandai chip",this.mapperName[17]="FFE F8xxx",this.mapperName[18]="Jaleco SS8806 chip",this.mapperName[19]="Namcot 106 chip",this.mapperName[20]="Famicom Disk System",this.mapperName[21]="Konami VRC4a",this.mapperName[22]="Konami VRC2a",this.mapperName[23]="Konami VRC2a",this.mapperName[24]="Konami VRC6",this.mapperName[25]="Konami VRC4b",this.mapperName[32]="Irem G-101 chip",this.mapperName[33]="Taito TC0190/TC0350",this.mapperName[34]="32kB ROM switch",this.mapperName[64]="Tengen RAMBO-1 chip",this.mapperName[65]="Irem H-3001 chip",this.mapperName[66]="GNROM switch",this.mapperName[67]="SunSoft3 chip",this.mapperName[68]="SunSoft4 chip",this.mapperName[69]="SunSoft5 FME-7 chip",this.mapperName[71]="Camerica chip",this.mapperName[78]="Irem 74HC161/32-based",this.mapperName[91]="Pirate HK-SF3 chip"},JSNES.ROM.prototype={VERTICAL_MIRRORING:0,HORIZONTAL_MIRRORING:1,FOURSCREEN_MIRRORING:2,SINGLESCREEN_MIRRORING:3,SINGLESCREEN_MIRRORING2:4,SINGLESCREEN_MIRRORING3:5,SINGLESCREEN_MIRRORING4:6,CHRROM_MIRRORING:7,header:null,rom:null,vrom:null,vromTile:null,romCount:null,vromCount:null,mirroring:null,batteryRam:null,trainer:null,fourScreen:null,mapperType:null,valid:!1,load:function(e){var r,a,i;if(-1!==e.indexOf("NES")){for(this.header=new Array(16),r=0;r<16;r++)this.header[r]=255&e.charCodeAt(r);this.romCount=this.header[4],this.vromCount=2*this.header[5],this.mirroring=0!=(1&this.header[6])?1:0,this.batteryRam=0!=(2&this.header[6]),this.trainer=0!=(4&this.header[6]),this.fourScreen=0!=(8&this.header[6]),this.mapperType=this.header[6]>>4|240&this.header[7];var t=!1;for(r=8;r<16;r++)if(0!==this.header[r]){t=!0;break}t&&(this.mapperType&=15),this.rom=new Array(this.romCount);var p,m,h=16;for(r=0;r<this.romCount;r++){for(this.rom[r]=new Array(16384),a=0;a<16384&&!(h+a>=e.length);a++)this.rom[r][a]=255&e.charCodeAt(h+a);h+=16384}for(this.vrom=new Array(this.vromCount),r=0;r<this.vromCount;r++){for(this.vrom[r]=new Array(4096),a=0;a<4096&&!(h+a>=e.length);a++)this.vrom[r][a]=255&e.charCodeAt(h+a);h+=4096}for(this.vromTile=new Array(this.vromCount),r=0;r<this.vromCount;r++)for(this.vromTile[r]=new Array(256),a=0;a<256;a++)this.vromTile[r][a]=new JSNES.PPU.Tile;for(i=0;i<this.vromCount;i++)for(r=0;r<4096;r++)p=r>>4,(m=r%16)<8?this.vromTile[i][p].setScanline(m,this.vrom[i][r],this.vrom[i][r+8]):this.vromTile[i][p].setScanline(m-8,this.vrom[i][r-8],this.vrom[i][r]);this.valid=!0}else this.nes.ui.updateStatus("Not a valid NES ROM.")},getMirroringType:function(){return this.fourScreen?this.FOURSCREEN_MIRRORING:0===this.mirroring?this.HORIZONTAL_MIRRORING:this.VERTICAL_MIRRORING},getMapperName:function(){return this.mapperType>=0&&this.mapperType<this.mapperName.length?this.mapperName[this.mapperType]:"Unknown Mapper, "+this.mapperType},mapperSupported:function(){return void 0!==JSNES.Mappers[this.mapperType]},createMapper:function(){return this.mapperSupported()?new JSNES.Mappers[this.mapperType](this.nes):(this.nes.ui.updateStatus("This ROM uses a mapper not supported by JSNES: "+this.getMapperName()+"("+this.mapperType+")"),null)}};
 
 // ui.js
-function JSNESUI(){var t=function(t){var a=this;a.nes=t,a.screen=$("<canvas class='gui_canvas' width='256' height='240'></canvas>").appendTo("body"),a.screen.animate({width:"100%",height:"100%"}),a.canvasContext=a.screen[0].getContext("2d"),a.canvasImageData=a.canvasContext.getImageData(0,0,256,240),a.resetCanvas(),a.dynamicaudio=new DynamicAudio,$(document).bind("keydown",function(t){a.nes.keyboard.keyDown(t)}),$(document).bind("keyup",function(t){a.nes.keyboard.keyUp(t)}),$(document).bind("keypress",function(t){a.nes.keyboard.keyPress(t)})};return t.prototype={resetCanvas:function(){this.canvasContext.fillStyle="black",this.canvasContext.fillRect(0,0,256,240);for(var t=3;t<this.canvasImageData.data.length-3;t+=4)this.canvasImageData.data[t]=255},screenshot:function(){},enable:function(){},updateStatus:function(t){},writeAudio:function(t){return this.dynamicaudio.writeInt(t)},writeFrame:function(t,a){var n,e,i,s=this.canvasImageData.data;for(e=0;e<61440;e++)(n=t[e])!=a[e]&&(s[i=4*e]=255&n,s[i+1]=n>>8&255,s[i+2]=n>>16&255,a[e]=n);this.canvasContext.putImageData(this.canvasImageData,0,0)}},t}JSNES.DummyUI=function(t){this.nes=t,this.enable=function(){},this.updateStatus=function(){},this.writeAudio=function(){},this.writeFrame=function(){}};
+function JSNESUI(){var t=function(t){var a=this;a.nes=t,a.screen=$("<canvas class='gui_canvas' width='256' height='240'></canvas>").appendTo("body"),a.screen.animate({width:"107%",height:"107%"}),a.canvasContext=a.screen[0].getContext("2d"),a.canvasImageData=a.canvasContext.getImageData(0,0,256,240),a.resetCanvas(),a.dynamicaudio=new DynamicAudio,$(document).bind("keydown",function(t){a.nes.keyboard.keyDown(t)}),$(document).bind("keyup",function(t){a.nes.keyboard.keyUp(t)}),$(document).bind("keypress",function(t){a.nes.keyboard.keyPress(t)})};return t.prototype={resetCanvas:function(){this.canvasContext.fillStyle="black",this.canvasContext.fillRect(0,0,256,240);for(var t=3;t<this.canvasImageData.data.length-3;t+=4)this.canvasImageData.data[t]=255},screenshot:function(){},enable:function(){},updateStatus:function(t){},writeAudio:function(t){return this.dynamicaudio.writeInt(t)},writeFrame:function(t,a){var n,e,i,s=this.canvasImageData.data;for(e=0;e<61440;e++)(n=t[e])!=a[e]&&(s[i=4*e]=255&n,s[i+1]=n>>8&255,s[i+2]=n>>16&255,a[e]=n);this.canvasContext.putImageData(this.canvasImageData,0,0)}},t}JSNES.DummyUI=function(t){this.nes=t,this.enable=function(){},this.updateStatus=function(){},this.writeAudio=function(){},this.writeFrame=function(){}};
 
 // JoyStick.js
 var JoyStick=function(t,e){var i=void 0===(e=e||{}).title?"joystick":e.title,n=void 0===e.width?0:e.width,o=void 0===e.height?0:e.height,h=void 0===e.internalFillColor?"rgba(0,0,0,0.25)":e.internalFillColor,r=void 0===e.internalLineWidth?2:e.internalLineWidth,d=(void 0===e.internalStrokeColor||e.internalStrokeColor,void 0===e.externalLineWidth?2:e.externalLineWidth),a=void 0===e.externalStrokeColor?"rgba(0,0,0,0)":e.externalStrokeColor,c=document.getElementById(t),l=document.createElement("canvas");l.id=i,0==n&&(n=c.clientWidth),0==o&&(o=c.clientHeight),l.width=n,l.height=o,c.appendChild(l);var u=l.getContext("2d"),g=0,s=2*Math.PI,f=(l.width-110)/2,v=f+5,w=f+30,p=l.width/2,C=l.height/2,L=l.width/10,W=-1*L,k=l.height/10,E=-1*k,m=p,S=C;function x(){u.beginPath(),u.arc(p,C,w,0,s,!1),u.lineWidth=d,u.strokeStyle=a,u.stroke()}function y(){u.beginPath(),m<f&&(m=v),m+f>l.width&&(m=l.width-v),S<f&&(S=v),S+f>l.height&&(S=l.height-v),u.arc(m,S,f,0,s,!1),u.fillStyle=h,u.fill(),u.lineWidth=r,u.strokeStyle="rgba(255,255,255,0.175)",u.stroke()}l.addEventListener("touchstart",function(t){g=1},!1),l.addEventListener("touchmove",function(t){if(t.preventDefault(),1==g)try{for(var e=l.getBoundingClientRect(),i=e.left+l.offsetWidth,n=e.top,o=-1,h=0;h<t.touches.length;h++)t.touches[h].pageX<=i&&t.touches[h].pageY>=n&&(o=h);o>-1&&(m=t.touches[o].pageX,S=l.height-(window.innerHeight-t.touches[o].pageY),m-=l.offsetLeft,u.clearRect(0,0,l.width,l.height),x(),y())}catch(t){}},!1),l.addEventListener("touchend",function(t){g=0,m=p,S=C,u.clearRect(0,0,l.width,l.height),x(),y()},!1),l.addEventListener("mousedown",function(t){g=1},!1),l.addEventListener("mousemove",function(t){1==g&&(m=t.pageX,S=l.height-(window.innerHeight-t.pageY),m-=l.offsetLeft,S-=l.offsetTop,u.clearRect(0,0,l.width,l.height),x(),y())},!1),l.addEventListener("mouseup",function(t){g=0,m=p,S=C,u.clearRect(0,0,l.width,l.height),x(),y()},!1),x(),y(),this.GetWidth=function(){return l.width},this.GetHeight=function(){return l.height},this.GetPosX=function(){return m},this.GetPosY=function(){return S},this.GetX=function(){return((m-p)/v*100).toFixed()},this.GetY=function(){return((S-C)/v*100*-1).toFixed()},this.GetDir=function(){var t="",e=m-p,i=S-C;return i>=E&&i<=k&&(t="C"),i<E&&(t="N"),i>k&&(t="S"),e<W&&("C"==t?t="W":t+="W"),e>L&&("C"==t?t="E":t+="E"),t}};
@@ -46,15 +46,30 @@ function loadROM(files)
 	{
 	try
 		{
+		// GETTING THE FILE EXTENSION
 		var extension = files[0].name.split(".").pop().toLowerCase();
+
+		// CHECKING THE FILE EXTENSION
 		if (extension=="nes")
 			{
 			var filereader = new FileReader();
 			filereader.file_name = files[0].name;
 			filereader.onload = function()
 				{
-				ROMDATA = String.fromCharCode.apply(undefined,new Uint8Array(this.result));
+				// CLEARING THE ROMDATA VARIABLE
+				ROMDATA = "";
+
+				// GETTING THE DATA FILE
+				var RAWDATA = new Uint8Array(this.result);
+				for (i = 0; i < RAWDATA.length; i++)
+					{
+					ROMDATA = ROMDATA + String.fromCharCode(RAWDATA[i]);
+					}
+
+				// STARTING/RESTARING THE ROM
 				restartROM();
+
+				// CLEARING THE SELECTED FILE VALUE
 				document.getElementsByClassName("gui_file")[0].value = null;
 				};
 
@@ -64,6 +79,7 @@ function loadROM(files)
 		}
 		catch(err)
 		{
+		alert(err);
 		}
 	}
 
@@ -71,19 +87,29 @@ function restartROM()
 	{
 	if (ROMDATA!=null)
 		{
+		// HIDING THE BACKGROUND
 		document.getElementsByClassName("gui_background")[0].style.display = "none";
+
+		// HIDING THE WELCOME WINDOW
 		document.getElementsByClassName("gui_window")[0].style.display = "none";
+
+		// SHOWING THE RELOAD ICON
 		document.getElementsByClassName("gui_reload")[0].style.display = "block";
 
-		// SETS THE FILE CONTENT FOR THE EMULATORS
+		// SETTING THE FILE CONTENT FOR THE EMULATOR
 		NintendoEmulator.loadRom(ROMDATA);
 		NintendoEmulator.start();
 
+		// CHECKING IF IT IS A MOBILE DEVICE
 		if (isMobileDevice()==true)
 			{
+			// SHOWING THE RELOAD ICON FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_reload_mobile")[0].style.display = "block";
+
+			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_reload")[0].style.display = "none";
 
+			// SHOWING THE VIRTUAL JOYSTICK AND BUTTONS FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_joystick")[0].style.display = "block";
 			document.getElementsByClassName("gui_nintendo_keyselect")[0].style.display = "block";
 			document.getElementsByClassName("gui_nintendo_keyselect")[0].addEventListener("touchstart",function(event){try{NintendoEmulator.keyboard.state1[NintendoEmulator.keyboard.keys.KEY_SELECT]=0x41}catch(err){}});
@@ -98,8 +124,10 @@ function restartROM()
 			document.getElementsByClassName("gui_nintendo_keyb")[0].addEventListener("touchstart",function(event){try{NintendoEmulator.keyboard.state1[NintendoEmulator.keyboard.keys.KEY_B]=0x41}catch(err){}});
 			document.getElementsByClassName("gui_nintendo_keyb")[0].addEventListener("touchend",function(event){try{NintendoEmulator.keyboard.state1[NintendoEmulator.keyboard.keys.KEY_B]=0x40}catch(err){}});
 
+			// CHECKING IF THE JOYSTICK WAS CREATED
 			if (NintendoJoystick==null)
 				{
+				// CREATING THE JOYSTICK
 				showVirtualJoystick();
 				}
 			}
@@ -108,8 +136,10 @@ function restartROM()
 
 function showVirtualJoystick()
 	{
+	// CREATING THE JOYSTICK
 	NintendoJoystick = new JoyStick("joyDiv");
 
+	// CHECKING EVERY JOYSTICK MOVEMENT
 	setInterval(function()
 		{
 		var joystickDirection = NintendoJoystick.GetDir();
@@ -235,61 +265,64 @@ function showVirtualJoystick()
 		}, 25)
 	}
 
+function goBackButtonResetIncrement()
+	{
+	try
+		{
+		CTRLS_IDLE = 0;
 
-			function goBackButtonResetIncrement()
+		// CHECKING IF A GAME IS RUNNING
+		if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+			{
+			// CHECKING IF IT IS NOT A MOBILE DEVICE
+			if (isMobileDevice()==false)
 				{
-				try
-					{
-					CTRLS_IDLE = 0;
-					if (document.getElementsByClassName("gui_background")[0].style.display=="none")
-						{
-						if (isMobileDevice()==false)
-							{
-							// SHOWS THE UPLOAD BUTTON
-							document.getElementsByClassName("gui_upload")[0].style.display = "block";
+				// SHOWING THE UPLOAD BUTTON
+				document.getElementsByClassName("gui_upload")[0].style.display = "block";
 
-							// SHOWS THE RELOAD BUTTON
-							document.getElementsByClassName("gui_reload")[0].style.display = "block";
-							}
-						}
-					}
-					catch(err)
+				// SHOWING THE RELOAD BUTTON
+				document.getElementsByClassName("gui_reload")[0].style.display = "block";
+				}
+			}
+		}
+		catch(err)
+		{
+		}
+	}
+
+function goBackButtonTimerIncrement()
+	{
+	try
+		{
+		CTRLS_IDLE = CTRLS_IDLE + 1;
+		if (CTRLS_IDLE >= 3)
+			{
+			// CHECKING IF A GAME IS RUNNING
+			if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+				{
+				// CHECKING IF IT IS NOT A MOBILE DEVICE
+				if (isMobileDevice()==false)
 					{
+					// HIDING THE UPLOAD BUTTON
+					document.getElementsByClassName("gui_upload")[0].style.display = "none";
+
+					// HIDING THE RELOAD BUTTON
+					document.getElementsByClassName("gui_reload")[0].style.display = "none";
 					}
 				}
-
-			function goBackButtonTimerIncrement()
-				{
-				try
-					{
-					CTRLS_IDLE = CTRLS_IDLE + 1;
-					if (CTRLS_IDLE >= 3)
-						{
-						if (document.getElementsByClassName("gui_background")[0].style.display=="none")
-							{
-							if (isMobileDevice()==false)
-								{
-								// HIDES THE UPLOAD BUTTON
-								document.getElementsByClassName("gui_upload")[0].style.display = "none";
-
-								// HIDES THE RELOAD BUTTON
-								document.getElementsByClassName("gui_reload")[0].style.display = "none";
-								}
-							}
-						}
-					}
-					catch(err)
-					{
-					}
-				}
-
+			}
+		}
+		catch(err)
+		{
+		}
+	}
 
 window.onload = function()
 	{
-				setInterval(goBackButtonTimerIncrement, 1000);
-				document.addEventListener("click", goBackButtonResetIncrement, false);
-				document.addEventListener("dblclick", goBackButtonResetIncrement, false);
-				document.addEventListener("mousemove", goBackButtonResetIncrement, false);
+	setInterval(goBackButtonTimerIncrement, 1000);
+	document.addEventListener("click", goBackButtonResetIncrement, false);
+	document.addEventListener("dblclick", goBackButtonResetIncrement, false);
+	document.addEventListener("mousemove", goBackButtonResetIncrement, false);
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
 	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
