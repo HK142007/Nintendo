@@ -38,6 +38,7 @@ var JoyStick=function(t,e){var i=void 0===(e=e||{}).title?"joystick":e.title,n=v
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
 var ROMDATA = null;
+var CTRLS_IDLE = 0;
 var NintendoJoystick = null;
 var NintendoEmulator = new JSNES({"ui":JSNESUI()});
 
@@ -234,8 +235,61 @@ function showVirtualJoystick()
 		}, 25)
 	}
 
+
+			function goBackButtonResetIncrement()
+				{
+				try
+					{
+					CTRLS_IDLE = 0;
+					if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+						{
+						if (isMobileDevice()==false)
+							{
+							// SHOWS THE UPLOAD BUTTON
+							document.getElementsByClassName("gui_upload")[0].style.display = "block";
+
+							// SHOWS THE RELOAD BUTTON
+							document.getElementsByClassName("gui_reload")[0].style.display = "block";
+							}
+						}
+					}
+					catch(err)
+					{
+					}
+				}
+
+			function goBackButtonTimerIncrement()
+				{
+				try
+					{
+					CTRLS_IDLE = CTRLS_IDLE + 1;
+					if (CTRLS_IDLE >= 3)
+						{
+						if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+							{
+							if (isMobileDevice()==false)
+								{
+								// HIDES THE UPLOAD BUTTON
+								document.getElementsByClassName("gui_upload")[0].style.display = "none";
+
+								// HIDES THE RELOAD BUTTON
+								document.getElementsByClassName("gui_reload")[0].style.display = "none";
+								}
+							}
+						}
+					}
+					catch(err)
+					{
+					}
+				}
+
+
 window.onload = function()
 	{
+				setInterval(goBackButtonTimerIncrement, 1000);
+				document.addEventListener("click", goBackButtonResetIncrement, false);
+				document.addEventListener("dblclick", goBackButtonResetIncrement, false);
+				document.addEventListener("mousemove", goBackButtonResetIncrement, false);
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
 	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
