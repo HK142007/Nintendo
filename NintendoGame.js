@@ -72,6 +72,7 @@ function restartROM()
 		{
 		document.getElementsByClassName("gui_background")[0].style.display = "none";
 		document.getElementsByClassName("gui_window")[0].style.display = "none";
+		document.getElementsByClassName("gui_reload")[0].style.display = "block";
 
 		// SETS THE FILE CONTENT FOR THE EMULATORS
 		NintendoEmulator.loadRom(ROMDATA);
