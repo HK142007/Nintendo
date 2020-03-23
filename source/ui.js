@@ -34,7 +34,7 @@ function JSNESUI()
 
 		self.screen = $("<canvas class='gui_canvas' width='256' height='240'></canvas>").appendTo("body");
 
-		self.screen.animate({width: "100%",height: "100%"});
+		self.screen.animate({width: "107%",height: "107%"});
 		self.canvasContext = self.screen[0].getContext("2d");
 		self.canvasImageData = self.canvasContext.getImageData(0, 0, 256, 240);
 		self.resetCanvas();
