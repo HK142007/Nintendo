@@ -117,8 +117,11 @@ function restartROM()
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (isMobileDevice()==true)
 			{
-			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
+			// HIDING THE UPLOAD ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_upload")[0].style.display = "none";
+
+			// HIDING THE SOUND ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_sound")[0].style.display = "none";
 
 			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_reload")[0].style.display = "none";
@@ -156,11 +159,14 @@ function restartROM()
 			}
 			else
 			{
-			// SHOWING THE RELOAD ICON FOR DESKTOP COMPUTERS
-			document.getElementsByClassName("gui_reload")[0].style.display = "block";
+			// SHOWING THE UPLOAD ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_upload")[0].style.display = "block";
 
 			// SHOWING THE SOUND ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_sound")[0].style.display = "block";
+
+			// SHOWING THE RELOAD ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_reload")[0].style.display = "block";
 			}
 		}
 	}
