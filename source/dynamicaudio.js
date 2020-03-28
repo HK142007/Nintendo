@@ -1,5 +1,12 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext; // prefixed naming used in Safary 8-9
 
+// workaround for enabling audio in Safari
+var finalAudioContext=null;
+function fixAudioContext(e){if(finalAudioContext==null){finalAudioContext=new AudioContext();finalAudioContext.resume()}}
+document.addEventListener("click",fixAudioContext);
+document.addEventListener("touchstart",fixAudioContext);
+document.addEventListener("touchend",fixAudioContext);
+
 function DynamicAudio(args) {
     if (this instanceof arguments.callee) {
         if (typeof this.init === "function") {
@@ -21,12 +28,6 @@ DynamicAudio.prototype = {
     init: function(opts) {
         var self = this;
         self.id = DynamicAudio.nextId++;
-        
-        // Attempt to create HTML5 Web audio context
-        try {
-            self.audioContext = new AudioContext();
-        } catch(e) {
-        }
     },
 
     write: function(samples) {
@@ -36,8 +37,9 @@ DynamicAudio.prototype = {
     },
 
     writeInt: function(samples) {
-        if (this.audioContext !== null) {
-            this.webAudioWrite(samples, this.intToFloatSample);
+        if (finalAudioContext !== null) {
+        this.audioContext = finalAudioContext;
+        this.webAudioWrite(samples, this.intToFloatSample);
         }
     },
 
