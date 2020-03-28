@@ -5,7 +5,6 @@ var finalAudioContext=null;
 function fixAudioContext(e){if(finalAudioContext==null){finalAudioContext=new AudioContext();finalAudioContext.resume()}}
 document.addEventListener("click",fixAudioContext);
 document.addEventListener("touchstart",fixAudioContext);
-document.addEventListener("touchend",fixAudioContext);
 
 function DynamicAudio(args) {
     if (this instanceof arguments.callee) {
