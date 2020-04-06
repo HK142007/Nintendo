@@ -41,7 +41,8 @@ var ROMDATA = null;
 var ROMNAME = null;
 var CTRLS_IDLE = 0;
 var NintendoJoystick = null;
-var NintendoGameSate = null;
+var NintendoGameState = null;
+var NintendoGameSoundInitialState = null;
 var NintendoEmulator = new JSNES({"ui":JSNESUI()});
 
 function soundOffOn()
@@ -246,7 +247,13 @@ function loadGameState(files)
 			filereader.onload = function()
 				{
 				// READING THE GAME STATE FROM THE FILE
-				NintendoGameSate = JSON.parse(this.result);
+				NintendoGameState = JSON.parse(this.result);
+
+				// GETTING THE ORIGINAL SOUND CONFIG (ON/OFF)
+				NintendoGameSoundInitialState = NintendoEmulator.opts.emulateSound;
+
+				// MUTING THE SOUND EMULATION
+				NintendoEmulator.opts.emulateSound = false;
 
 				// CLEARING THE EMULATOR STATE
 				NintendoEmulator.reset();
@@ -258,10 +265,13 @@ function loadGameState(files)
 				setTimeout(function()
 					{
 					// LOADING THE GAME STATE
-					NintendoEmulator.fromJSON(NintendoGameSate);
+					NintendoEmulator.fromJSON(NintendoGameState);
 
 					// RESUMING THE GAME
 					NintendoEmulator.start();
+
+					// RESTORING THE ORIGINAL SOUND CONFIG (ON/OFF)
+					NintendoEmulator.opts.emulateSound = NintendoGameSoundInitialState;
 					}, 300);
 
 				// CLEARING THE SELECTED FILE VALUE
