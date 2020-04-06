@@ -220,7 +220,7 @@ JSNES.prototype = {
     
     toJSON: function() {
         return {
-            'romData': this.romData,
+            //'romData': this.romData,
             'cpu': this.cpu.toJSON(),
             'mmap': this.mmap.toJSON(),
             'ppu': this.ppu.toJSON()
@@ -228,7 +228,7 @@ JSNES.prototype = {
     },
     
     fromJSON: function(s) {
-        this.loadRom(s.romData);
+        //this.loadRom(s.romData);
         this.cpu.fromJSON(s.cpu);
         this.mmap.fromJSON(s.mmap);
         this.ppu.fromJSON(s.ppu);
