@@ -5,7 +5,7 @@
 window.AudioContext=window.AudioContext||window.webkitAudioContext;var finalAudioContext=null;function fixAudioContext(t){null==finalAudioContext&&(finalAudioContext=new AudioContext).resume()}function DynamicAudio(t){if(!(this instanceof arguments.callee))return new arguments.callee(arguments);"function"==typeof this.init&&this.init.apply(this,t&&t.callee?t:arguments)}document.addEventListener("click",fixAudioContext),document.addEventListener("touchstart",fixAudioContext),DynamicAudio.VERSION="<%= version %>",DynamicAudio.nextId=1,DynamicAudio.prototype={nextId:null,audioContext:null,init:function(t){this.id=DynamicAudio.nextId++},write:function(t){null!==this.audioContext&&this.webAudioWrite(t)},writeInt:function(t){null!==finalAudioContext&&(this.audioContext=finalAudioContext,this.webAudioWrite(t,this.intToFloatSample))},webAudioWrite:function(t,i){var n=this.audioContext.createBuffer(2,t.length,this.audioContext.sampleRate),e=n.getChannelData(0),o=n.getChannelData(1),u=0;if(i)for(var a=0;a<t.length;a+=2)e[u]=i(t[a]),o[u]=i(t[a+1]),u++;else for(a=0;a<t.length;a+=2)e[u]=t[a],o[u]=t[a+1],u++;var d=this.audioContext.createBufferSource();d.buffer=n,d.connect(this.audioContext.destination),d.start()},intToFloatSample:function(t){return t/32768}};
 
 // nes.js
-var JSNES=function(t){var s;if(this.opts={ui:JSNES.DummyUI,preferredFrameRate:60,fpsInterval:500,showDisplay:!0,emulateSound:!0,sampleRate:44100,CPU_FREQ_NTSC:1789772.5,CPU_FREQ_PAL:1773447.4},void 0!==t)for(s in this.opts)void 0!==t[s]&&(this.opts[s]=t[s]);this.frameTime=1e3/this.opts.preferredFrameRate,this.ui=new this.opts.ui(this),this.cpu=new JSNES.CPU(this),this.ppu=new JSNES.PPU(this),this.papu=new JSNES.PAPU(this),this.mmap=null,this.keyboard=new JSNES.Keyboard,this.ui.updateStatus("Ready to load a ROM.")};JSNES.VERSION="<%= version %>",JSNES.prototype={isRunning:!1,fpsFrameCount:0,romData:null,reset:function(){null!==this.mmap&&this.mmap.reset(),this.cpu.reset(),this.ppu.reset(),this.papu.reset()},start:function(){var t=this;null!==this.rom&&this.rom.valid?this.isRunning||(this.isRunning=!0,this.frameInterval=setInterval(function(){t.frame()},this.frameTime),this.resetFps(),this.printFps(),this.fpsInterval=setInterval(function(){t.printFps()},this.opts.fpsInterval)):this.ui.updateStatus("There is no ROM loaded, or it is invalid.")},frame:function(){this.ppu.startFrame();var t=0,s=this.opts.emulateSound,i=this.cpu,e=this.ppu,a=this.papu;t:for(;;)for(0===i.cyclesToHalt?(t=i.emulate(),s&&a.clockFrameCounter(t),t*=3):i.cyclesToHalt>8?(t=24,s&&a.clockFrameCounter(8),i.cyclesToHalt-=8):(t=3*i.cyclesToHalt,s&&a.clockFrameCounter(i.cyclesToHalt),i.cyclesToHalt=0);t>0;t--){if(e.curX===e.spr0HitX&&1===e.f_spVisibility&&e.scanline-21===e.spr0HitY&&e.setStatusFlag(e.STATUS_SPRITE0HIT,!0),e.requestEndFrame&&(e.nmiCounter--,0===e.nmiCounter)){e.requestEndFrame=!1,e.startVBlank();break t}e.curX++,341===e.curX&&(e.curX=0,e.endScanline())}this.fpsFrameCount++},printFps:function(){var t=+new Date,s="Running";this.lastFpsTime&&(s+=": "+(this.fpsFrameCount/((t-this.lastFpsTime)/1e3)).toFixed(2)+" FPS"),this.ui.updateStatus(s),this.fpsFrameCount=0,this.lastFpsTime=t},stop:function(){clearInterval(this.frameInterval),clearInterval(this.fpsInterval),this.isRunning=!1},reloadRom:function(){null!==this.romData&&this.loadRom(this.romData)},loadRom:function(t){if(this.isRunning&&this.stop(),this.ui.updateStatus("Loading ROM..."),this.rom=new JSNES.ROM(this),this.rom.load(t),this.rom.valid){if(this.reset(),this.mmap=this.rom.createMapper(),!this.mmap)return;this.mmap.loadROM(),this.ppu.setMirroring(this.rom.getMirroringType()),this.romData=t,this.ui.updateStatus("Successfully loaded. Ready to be started.")}else this.ui.updateStatus("Invalid ROM!");return this.rom.valid},resetFps:function(){this.lastFpsTime=null,this.fpsFrameCount=0},setFramerate:function(t){this.opts.preferredFrameRate=t,this.frameTime=1e3/t,this.papu.setSampleRate(this.opts.sampleRate,!1)},toJSON:function(){return{romData:this.romData,cpu:this.cpu.toJSON(),mmap:this.mmap.toJSON(),ppu:this.ppu.toJSON()}},fromJSON:function(t){this.loadRom(t.romData),this.cpu.fromJSON(t.cpu),this.mmap.fromJSON(t.mmap),this.ppu.fromJSON(t.ppu)}};
+var JSNES=function(t){var s;if(this.opts={ui:JSNES.DummyUI,preferredFrameRate:60,fpsInterval:500,showDisplay:!0,emulateSound:!0,sampleRate:44100,CPU_FREQ_NTSC:1789772.5,CPU_FREQ_PAL:1773447.4},void 0!==t)for(s in this.opts)void 0!==t[s]&&(this.opts[s]=t[s]);this.frameTime=1e3/this.opts.preferredFrameRate,this.ui=new this.opts.ui(this),this.cpu=new JSNES.CPU(this),this.ppu=new JSNES.PPU(this),this.papu=new JSNES.PAPU(this),this.mmap=null,this.keyboard=new JSNES.Keyboard,this.ui.updateStatus("Ready to load a ROM.")};JSNES.VERSION="<%= version %>",JSNES.prototype={isRunning:!1,fpsFrameCount:0,romData:null,reset:function(){null!==this.mmap&&this.mmap.reset(),this.cpu.reset(),this.ppu.reset(),this.papu.reset()},start:function(){var t=this;null!==this.rom&&this.rom.valid?this.isRunning||(this.isRunning=!0,this.frameInterval=setInterval(function(){t.frame()},this.frameTime),this.resetFps(),this.printFps(),this.fpsInterval=setInterval(function(){t.printFps()},this.opts.fpsInterval)):this.ui.updateStatus("There is no ROM loaded, or it is invalid.")},frame:function(){this.ppu.startFrame();var t=0,s=this.opts.emulateSound,i=this.cpu,e=this.ppu,a=this.papu;t:for(;;)for(0===i.cyclesToHalt?(t=i.emulate(),s&&a.clockFrameCounter(t),t*=3):i.cyclesToHalt>8?(t=24,s&&a.clockFrameCounter(8),i.cyclesToHalt-=8):(t=3*i.cyclesToHalt,s&&a.clockFrameCounter(i.cyclesToHalt),i.cyclesToHalt=0);t>0;t--){if(e.curX===e.spr0HitX&&1===e.f_spVisibility&&e.scanline-21===e.spr0HitY&&e.setStatusFlag(e.STATUS_SPRITE0HIT,!0),e.requestEndFrame&&(e.nmiCounter--,0===e.nmiCounter)){e.requestEndFrame=!1,e.startVBlank();break t}e.curX++,341===e.curX&&(e.curX=0,e.endScanline())}this.fpsFrameCount++},printFps:function(){var t=+new Date,s="Running";this.lastFpsTime&&(s+=": "+(this.fpsFrameCount/((t-this.lastFpsTime)/1e3)).toFixed(2)+" FPS"),this.ui.updateStatus(s),this.fpsFrameCount=0,this.lastFpsTime=t},stop:function(){clearInterval(this.frameInterval),clearInterval(this.fpsInterval),this.isRunning=!1},reloadRom:function(){null!==this.romData&&this.loadRom(this.romData)},loadRom:function(t){if(this.isRunning&&this.stop(),this.ui.updateStatus("Loading ROM..."),this.rom=new JSNES.ROM(this),this.rom.load(t),this.rom.valid){if(this.reset(),this.mmap=this.rom.createMapper(),!this.mmap)return;this.mmap.loadROM(),this.ppu.setMirroring(this.rom.getMirroringType()),this.romData=t,this.ui.updateStatus("Successfully loaded. Ready to be started.")}else this.ui.updateStatus("Invalid ROM!");return this.rom.valid},resetFps:function(){this.lastFpsTime=null,this.fpsFrameCount=0},setFramerate:function(t){this.opts.preferredFrameRate=t,this.frameTime=1e3/t,this.papu.setSampleRate(this.opts.sampleRate,!1)},toJSON:function(){return{cpu:this.cpu.toJSON(),mmap:this.mmap.toJSON(),ppu:this.ppu.toJSON()}},fromJSON:function(t){this.cpu.fromJSON(t.cpu),this.mmap.fromJSON(t.mmap),this.ppu.fromJSON(t.ppu)}};
 
 // utils.js
 JSNES.Utils={copyArrayElements:function(r,n,t,e,o){for(var S=0;S<o;++S)t[e+S]=r[n+S]},copyArray:function(r){for(var n=new Array(r.length),t=0;t<r.length;t++)n[t]=r[t];return n},fromJSON:function(r,n){for(var t=0;t<r.JSON_PROPERTIES.length;t++)r[r.JSON_PROPERTIES[t]]=n[r.JSON_PROPERTIES[t]]},toJSON:function(r){for(var n={},t=0;t<r.JSON_PROPERTIES.length;t++)n[r.JSON_PROPERTIES[t]]=r[r.JSON_PROPERTIES[t]];return n},isIE:function(){return/msie/i.test(navigator.userAgent)&&!/opera/i.test(navigator.userAgent)}};
@@ -38,8 +38,10 @@ var JoyStick=function(t,e){var i=void 0===(e=e||{}).title?"joystick":e.title,n=v
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
 var ROMDATA = null;
+var ROMNAME = null;
 var CTRLS_IDLE = 0;
 var NintendoJoystick = null;
+var NintendoGameSate = null;
 var NintendoEmulator = new JSNES({"ui":JSNESUI()});
 
 function soundOffOn()
@@ -76,6 +78,9 @@ function loadROM(files)
 				{
 				// CLEARING THE ROMDATA VARIABLE
 				ROMDATA = "";
+
+				// SETTING THE ROM FILENAME
+				ROMNAME = files[0].name;
 
 				// GETTING THE DATA FILE
 				var RAWDATA = new Uint8Array(this.result);
@@ -132,6 +137,12 @@ function restartROM()
 			// SHOWING THE SOUND ICON FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_sound_mobile")[0].style.display = "block";
 
+			// SHOWING THE DOWNLOAD STATE ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_download_mobile")[0].style.display = "block";
+
+			// SHOWING THE UPLOAD STATE ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_uploadsave_mobile")[0].style.display = "block";
+
 			// SHOWING THE RELOAD ICON FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_reload_mobile")[0].style.display = "block";
 
@@ -165,9 +176,102 @@ function restartROM()
 			// SHOWING THE SOUND ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_sound")[0].style.display = "block";
 
+			// SHOWING THE DOWNLOAD STATE ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_download")[0].style.display = "block";
+
+			// SHOWING THE UPLOAD STATE ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_uploadsave")[0].style.display = "block";
+
 			// SHOWING THE RELOAD ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_reload")[0].style.display = "block";
 			}
+		}
+	}
+
+function downloadGameState()
+	{
+	try
+		{
+		// GETTING THE GAME STATE
+		var tempState = JSON.stringify(NintendoEmulator.toJSON());
+
+		// GETTING THE ROM NAME
+		var tempName = ROMNAME.replace(/\.[^/.]+$/, "") + ".state";
+
+		// DOWNLOADING THE GAME STATE
+		download_Blob(tempState, tempName, "application/octet-stream");
+		}
+		catch(err)
+		{
+		}
+	}
+
+function download_Blob(data, fileName, mimeType)
+	{
+	var blob, url;
+	blob = new Blob([data], {type: mimeType});
+	url = window.URL.createObjectURL(blob);
+	download_URL(url, fileName);
+	}
+
+function download_URL(data, fileName)
+	{
+	var a;
+	a = document.createElement("a");
+	a.href = data;
+	a.download = fileName;
+	document.body.appendChild(a);
+	a.style = "display: none";
+	a.click();
+	a.remove();
+	}
+
+function loadGameState(files)
+	{
+	try
+		{
+		// CHECKING THE FILE EXTENSION
+		var extension = files[0].name.split(".").pop().toLowerCase();
+
+		// CHECKING IF THE USER IS USING SAFARI. SAFARI DOESN'T WORK PROPERLY WITH BLOB ELEMENTS.
+		// BECAUSE OF THAT, ALL THE DOWNLOADED STATE ARE GOING TO BE SOMETHING LIKE
+		// UNKNOWN.DMS AND WON'T BE A .STATE FILE.
+		var isUsingSafari = navigator.userAgent.toLowerCase().indexOf('safari');
+
+		if (extension=="state" || isUsingSafari>-1)
+			{
+			// READING THE SELECTED FILE
+			var filereader = new FileReader();
+			filereader.file_name = files[0].name;
+			filereader.onload = function()
+				{
+				// READING THE GAME STATE FROM THE FILE
+				NintendoGameSate = JSON.parse(this.result);
+
+				// CLEARING THE EMULATOR STATE
+				NintendoEmulator.reset();
+
+				// RESTARTING THE ROM
+				restartROM();
+
+				// WAITING FOR THE GAME TO BE LOADED
+				setTimeout(function()
+					{
+					// LOADING THE GAME STATE
+					NintendoEmulator.fromJSON(NintendoGameSate);
+
+					// RESUMING THE GAME
+					NintendoEmulator.start();
+					}, 300);
+
+				// CLEARING THE SELECTED FILE VALUE
+				document.getElementsByClassName("gui_file_state")[0].value = null;
+				};
+			filereader.readAsText(files[0]);
+			}
+		}
+		catch(err)
+		{
 		}
 	}
 
@@ -320,6 +424,12 @@ function goBackButtonResetIncrement()
 				// SHOWING THE SOUND BUTTON
 				document.getElementsByClassName("gui_sound")[0].style.display = "block";
 
+				// SHOWING THE DOWNLOAD STATE BUTTON
+				document.getElementsByClassName("gui_download")[0].style.display = "block";
+
+				// SHOWING THE UPLOAD STATE BUTTON
+				document.getElementsByClassName("gui_uploadsave")[0].style.display = "block";
+
 				// SHOWING THE RELOAD BUTTON
 				document.getElementsByClassName("gui_reload")[0].style.display = "block";
 				}
@@ -348,6 +458,12 @@ function goBackButtonTimerIncrement()
 
 					// HIDING THE SOUND BUTTON
 					document.getElementsByClassName("gui_sound")[0].style.display = "none";
+
+					// HIDING THE DOWNLOAD STATE BUTTON
+					document.getElementsByClassName("gui_download")[0].style.display = "none";
+
+					// HIDING THE UPLOAD STATE BUTTON
+					document.getElementsByClassName("gui_uploadsave")[0].style.display = "none";
 
 					// HIDING THE RELOAD BUTTON
 					document.getElementsByClassName("gui_reload")[0].style.display = "none";
@@ -402,6 +518,10 @@ window.onload = function()
 	document.getElementsByClassName("gui_upload_mobile")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
 	document.getElementsByClassName("gui_sound")[0].addEventListener("click",function(event){soundOffOn()});
 	document.getElementsByClassName("gui_sound_mobile")[0].addEventListener("click",function(event){soundOffOn()});
+	document.getElementsByClassName("gui_download")[0].addEventListener("click",function(event){downloadGameState()});
+	document.getElementsByClassName("gui_download_mobile")[0].addEventListener("click",function(event){downloadGameState()});
+	document.getElementsByClassName("gui_uploadsave")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file_state")[0].click()});
+	document.getElementsByClassName("gui_uploadsave_mobile")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file_state")[0].click()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
 	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
 	}
