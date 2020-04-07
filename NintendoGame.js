@@ -45,6 +45,65 @@ var NintendoGameState = null;
 var NintendoGameSoundInitialState = null;
 var NintendoEmulator = new JSNES({"ui":JSNESUI()});
 
+function goBack()
+	{
+	try
+		{
+		// SHOWING THE BACKGROUND
+		document.getElementsByClassName("gui_background")[0].style.display = "block";
+
+		// SHOWING THE WELCOME WINDOW
+		document.getElementsByClassName("gui_window")[0].style.display = "block";
+
+		// SHOWING THE UPLOAD ICON FOR DESKTOP COMPUTERS
+		document.getElementsByClassName("gui_upload")[0].style.display = "block";
+
+		// HIDING THE GO BACK ICON FOR DESKTOP COMPUTERS
+		document.getElementsByClassName("gui_goback")[0].style.display = "none";
+
+		// HIDING THE SOUND ICON FOR DESKTOP COMPUTERS
+		document.getElementsByClassName("gui_sound")[0].style.display = "none";
+
+		// HIDING THE DOWNLOAD STATE ICON FOR DESKTOP COMPUTERS
+		document.getElementsByClassName("gui_download")[0].style.display = "none";
+
+		// HIDING THE UPLOAD STATE ICON FOR DESKTOP COMPUTERS
+		document.getElementsByClassName("gui_uploadsave")[0].style.display = "none";
+
+		// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
+		document.getElementsByClassName("gui_reload")[0].style.display = "none";
+
+		// HIDING THE GO BACK ICON FOR MOBILE DEVICES
+		document.getElementsByClassName("gui_goback_mobile")[0].style.display = "none";
+
+		// HIDING THE SOUND ICON FOR MOBILE DEVICES
+		document.getElementsByClassName("gui_sound_mobile")[0].style.display = "none";
+
+		// HIDING THE DOWNLOAD STATE ICON FOR MOBILE DEVICES
+		document.getElementsByClassName("gui_download_mobile")[0].style.display = "none";
+
+		// HIDING THE UPLOAD STATE ICON FOR MOBILE DEVICES
+		document.getElementsByClassName("gui_uploadsave_mobile")[0].style.display = "none";
+
+		// HIDING THE RELOAD ICON FOR MOBILE DEVICES
+		document.getElementsByClassName("gui_reload_mobile")[0].style.display = "none";
+
+		// HIDING THE VIRTUAL JOYSTICK AND BUTTONS FOR MOBILE DEVICES
+		document.getElementsByClassName("gui_joystick")[0].style.display = "none";
+		document.getElementsByClassName("gui_nintendo_keyselect")[0].style.display = "none";
+		document.getElementsByClassName("gui_nintendo_keystart")[0].style.display = "none";
+		document.getElementsByClassName("gui_nintendo_keya")[0].style.display = "none";
+		document.getElementsByClassName("gui_nintendo_keyb")[0].style.display = "none";
+
+		// CLEARING THE EMULATOR STATUS
+		NintendoEmulator.stop();
+		NintendoEmulator = new JSNES({"ui":JSNESUI()});
+		}
+		catch(err)
+		{
+		}
+	}
+
 function soundOffOn()
 	{
 	try
@@ -123,17 +182,26 @@ function restartROM()
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (isMobileDevice()==true)
 			{
+			// HIDING THE GO BACK ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_goback")[0].style.display = "none";
+
 			// HIDING THE UPLOAD ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_upload")[0].style.display = "none";
 
 			// HIDING THE SOUND ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_sound")[0].style.display = "none";
 
+			// HIDING THE DOWNLOAD STATE ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_download")[0].style.display = "none";
+
+			// HIDING THE UPLOAD STATE ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_uploadsave")[0].style.display = "none";
+
 			// HIDING THE RELOAD ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_reload")[0].style.display = "none";
 
-			// SHOWING THE UPLOAD ICON FOR MOBILE DEVICES
-			document.getElementsByClassName("gui_upload_mobile")[0].style.display = "block";
+			// SHOWING THE GO BACK ICON FOR MOBILE DEVICES
+			document.getElementsByClassName("gui_goback_mobile")[0].style.display = "block";
 
 			// SHOWING THE SOUND ICON FOR MOBILE DEVICES
 			document.getElementsByClassName("gui_sound_mobile")[0].style.display = "block";
@@ -171,8 +239,11 @@ function restartROM()
 			}
 			else
 			{
-			// SHOWING THE UPLOAD ICON FOR DESKTOP COMPUTERS
-			document.getElementsByClassName("gui_upload")[0].style.display = "block";
+			// SHOWING THE GO BACK ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_goback")[0].style.display = "block";
+
+			// HIDING THE UPLOAD ICON FOR DESKTOP COMPUTERS
+			document.getElementsByClassName("gui_upload")[0].style.display = "none";
 
 			// SHOWING THE SOUND ICON FOR DESKTOP COMPUTERS
 			document.getElementsByClassName("gui_sound")[0].style.display = "block";
@@ -439,8 +510,8 @@ function goBackButtonResetIncrement()
 			// CHECKING IF IT IS NOT A MOBILE DEVICE
 			if (isMobileDevice()==false)
 				{
-				// SHOWING THE UPLOAD BUTTON
-				document.getElementsByClassName("gui_upload")[0].style.display = "block";
+				// SHOWING THE GO BACK BUTTON
+				document.getElementsByClassName("gui_goback")[0].style.display = "block";
 
 				// SHOWING THE SOUND BUTTON
 				document.getElementsByClassName("gui_sound")[0].style.display = "block";
@@ -474,8 +545,8 @@ function goBackButtonTimerIncrement()
 				// CHECKING IF IT IS NOT A MOBILE DEVICE
 				if (isMobileDevice()==false)
 					{
-					// HIDING THE UPLOAD BUTTON
-					document.getElementsByClassName("gui_upload")[0].style.display = "none";
+					// HIDING THE GO BACK BUTTON
+					document.getElementsByClassName("gui_goback")[0].style.display = "none";
 
 					// HIDING THE SOUND BUTTON
 					document.getElementsByClassName("gui_sound")[0].style.display = "none";
@@ -539,8 +610,9 @@ window.onload = function()
 	document.addEventListener("click", goBackButtonResetIncrement, false);
 	document.addEventListener("dblclick", goBackButtonResetIncrement, false);
 	document.addEventListener("mousemove", goBackButtonResetIncrement, false);
+	document.getElementsByClassName("gui_goback")[0].addEventListener("click",function(event){goBack()});
+	document.getElementsByClassName("gui_goback_mobile")[0].addEventListener("click",function(event){goBack()});
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
-	document.getElementsByClassName("gui_upload_mobile")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
 	document.getElementsByClassName("gui_sound")[0].addEventListener("click",function(event){soundOffOn()});
 	document.getElementsByClassName("gui_sound_mobile")[0].addEventListener("click",function(event){soundOffOn()});
 	document.getElementsByClassName("gui_download")[0].addEventListener("click",function(event){downloadGameState()});
