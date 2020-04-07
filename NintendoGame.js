@@ -217,14 +217,25 @@ function download_Blob(data, fileName, mimeType)
 
 function download_URL(data, fileName)
 	{
-	var a;
-	a = document.createElement("a");
-	a.href = data;
-	a.download = fileName;
-	document.body.appendChild(a);
-	a.style = "display: none";
-	a.click();
-	a.remove();
+	var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+
+	if (iOS==true)
+		{
+		// IOS REQUIRES THAT THE BLOB URL MUST BE OPENED IN A NEW TAB
+		// BECAUSE OTHERWISE THE CURRENT GAME/WINDOW/LOCATION WILL BE LOST.
+		window.open(data, "_blank");
+		}
+		else
+		{
+		var a;
+		a = document.createElement("a");
+		a.href = data;
+		a.download = fileName;
+		document.body.appendChild(a);
+		a.style = "display: none";
+		a.click();
+		a.remove();
+		}
 	}
 
 function loadGameState(files)
@@ -234,12 +245,12 @@ function loadGameState(files)
 		// CHECKING THE FILE EXTENSION
 		var extension = files[0].name.split(".").pop().toLowerCase();
 
-		// CHECKING IF THE USER IS USING SAFARI. SAFARI DOESN'T WORK PROPERLY WITH BLOB ELEMENTS.
+		// CHECKING IF THE USER IS USING IOS. SAFARI DOESN'T WORK PROPERLY WITH BLOB ELEMENTS.
 		// BECAUSE OF THAT, ALL THE DOWNLOADED STATE ARE GOING TO BE SOMETHING LIKE
 		// UNKNOWN.DMS AND WON'T BE A .STATE FILE.
-		var isUsingSafari = navigator.userAgent.toLowerCase().indexOf('safari');
+		var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
-		if (extension=="state" || isUsingSafari>-1)
+		if (extension=="state" || iOS==true)
 			{
 			// READING THE SELECTED FILE
 			var filereader = new FileReader();
@@ -521,6 +532,10 @@ window.onfocus = function()
 window.onload = function()
 	{
 	setInterval(goBackButtonTimerIncrement, 1000);
+
+	// BUGFIX FOR IOS
+	setInterval(function(){try{if (finalAudioContext.state==="suspended"){finalAudioContext.resume()}}catch(err){}},500);
+
 	document.addEventListener("click", goBackButtonResetIncrement, false);
 	document.addEventListener("dblclick", goBackButtonResetIncrement, false);
 	document.addEventListener("mousemove", goBackButtonResetIncrement, false);
