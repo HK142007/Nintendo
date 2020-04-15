@@ -17,7 +17,7 @@ https://lrusso.github.io/Nintendo/Nintendo.htm
 * Sound button.
 * Restart button.
 * Audio working in Safari (MacOS and iOS).
-* Load and save state working (several bugfixes).
+* Load and save state working (several bug fixes).
 * Mobile compatibility (virtual joystick and buttons).
 * Pause and Resume automatically if the window is focused or not.
 * It is a WPA (Progressive Web App) compatible with Android and iOS devices.
