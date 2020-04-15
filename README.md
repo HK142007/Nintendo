@@ -14,13 +14,13 @@ https://lrusso.github.io/Nintendo/Nintendo.htm
 
 ## Main differences with JSNES
 
-* Mobile compatibility.
+* Sound button.
+* Restart button.
 * Load and save states.
 * Audio working in Safari (MacOS and iOS).
-* Restart button.
-* Sound control button.
+* Mobile compatibility (virtual joystick and buttons).
 * Pause and Resume automatically if the window is focused or not.
-* It's a WPA (Progressive Web App) compatible with Android and iOS devices.
+* It is a WPA (Progressive Web App) compatible with Android and iOS devices.
 
 ## Based on the work of:
 
