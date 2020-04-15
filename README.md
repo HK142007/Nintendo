@@ -20,7 +20,7 @@ https://lrusso.github.io/Nintendo/Nintendo.htm
 * Load and save state working (several bug fixes).
 * Mobile compatibility (virtual joystick and buttons).
 * Pause and Resume automatically if the window is focused or not.
-* It is a PWA (Progressive Web App) compatible with Android and iOS devices.
+* It is a Progressive Web App compatible with Android and iOS devices.
 
 ## Roadmap
 
