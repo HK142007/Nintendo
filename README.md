@@ -22,6 +22,10 @@ https://lrusso.github.io/Nintendo/Nintendo.htm
 * Pause and Resume automatically if the window is focused or not.
 * It is a WPA (Progressive Web App) compatible with Android and iOS devices.
 
+## Roadmap
+
+* margin
+
 ## Based on the work of:
 
 https://github.com/bfirsh/jsnes
