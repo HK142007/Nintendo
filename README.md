@@ -24,7 +24,7 @@ https://lrusso.github.io/Nintendo/Nintendo.htm
 
 ## Roadmap
 
-* margin
+* Remove margin: The PPU.js file has a ScrollWrite function that implements a 7 pixel margin.
 
 ## Based on the work of:
 
