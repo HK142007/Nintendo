@@ -575,7 +575,7 @@ function goBackButtonTimerIncrement()
 		}
 	}
 
-window.onblur = function()
+window.addEventListener("blur", function()
 	{
 	try
 		{
@@ -589,9 +589,9 @@ window.onblur = function()
 		catch(err)
 		{
 		}
-	}
+	});
 
-window.onfocus = function()
+window.addEventListener("focus", function()
 	{
 	try
 		{
@@ -605,9 +605,9 @@ window.onfocus = function()
 		catch(err)
 		{
 		}
-	}
+	});
 
-window.onload = function()
+window.addEventListener("load", function()
 	{
 	setInterval(goBackButtonTimerIncrement, 1000);
 
@@ -628,4 +628,4 @@ window.onload = function()
 	document.getElementsByClassName("gui_uploadsave_mobile")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file_state")[0].click()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
 	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
-	}
+	});
