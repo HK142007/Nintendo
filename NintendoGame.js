@@ -45,6 +45,40 @@ var NintendoGameState = null;
 var NintendoGameSoundInitialState = null;
 var NintendoEmulator = new JSNES({"ui":JSNESUI()});
 
+var userLanguage = window.navigator.userLanguage || window.navigator.language;
+
+var STRING_TITLE = "";
+var STRING_ABOUT = "";
+var STRING_SELECTGAME = "";
+var STRING_LOADSTATE = "";
+var STRING_SAVESTATE = "";
+var STRING_GOBACK = "";
+var STRING_RELOAD = "";
+var STRING_SOUND = "";
+
+if (userLanguage.substring(0,2)=="es")
+	{
+	STRING_TITLE = "Emulador de Nintendo";
+	STRING_ABOUT = "Desarrollado por <b>www.lrusso.com</b>";
+	STRING_SELECTGAME = "Seleccionar juego";
+	STRING_LOADSTATE = "Subir estado del juego";
+	STRING_SAVESTATE = "Descargar estado del juego";
+	STRING_GOBACK = "Volver al men" + String.fromCharCode(250) + " principal";
+	STRING_RELOAD = "Recargar juego";
+	STRING_SOUND = "Sonido en juego";
+	}
+	else
+	{
+	STRING_TITLE = "Nintendo Emulator";
+	STRING_ABOUT = "Designed by <b>www.lrusso.com</b>";
+	STRING_SELECTGAME = "Select game";
+	STRING_LOADSTATE = "Upload game state";
+	STRING_SAVESTATE = "Download game state";
+	STRING_GOBACK = "Go back to the main menu";
+	STRING_RELOAD = "Reload game";
+	STRING_SOUND = "Game sound";
+	}
+
 function goBack()
 	{
 	try
@@ -609,14 +643,32 @@ window.addEventListener("focus", function()
 
 window.addEventListener("load", function()
 	{
-	setInterval(goBackButtonTimerIncrement, 1000);
-
 	// BUGFIX FOR IOS
 	setInterval(function(){try{if (finalAudioContext.state==="suspended"){finalAudioContext.resume()}}catch(err){}},500);
 
+	// SETTING THE TEXT VALUES FOR THE WELCOME WINDOW AND ICON TOOLTIPS
+	document.getElementsByClassName("gui_window_title_value")[0].innerHTML = STRING_TITLE;
+	document.getElementsByClassName("gui_window_about")[0].innerHTML = STRING_ABOUT;
+	document.getElementsByClassName("gui_upload")[0].title = STRING_SELECTGAME;
+	document.getElementsByClassName("gui_goback")[0].title = STRING_GOBACK;
+	document.getElementsByClassName("gui_reload")[0].title = STRING_RELOAD;
+	document.getElementsByClassName("gui_uploadsave")[0].title = STRING_LOADSTATE;
+	document.getElementsByClassName("gui_download")[0].title = STRING_SAVESTATE;
+	document.getElementsByClassName("gui_sound")[0].title = STRING_SOUND;
+
+	// SHOWING THE UPLOAD ICON
+	document.getElementsByClassName("gui_upload")[0].style.display = "block";
+
+	// SHOWING THE WELCOME WINDOW
+	document.getElementsByClassName("gui_window")[0].style.display = "block";
+
+	// TO KEEP TRACK OF THE CLICKS WHEN PLAYING A GAME IN ORDER TO HIDE THE GOBACK BUTTON
+	setInterval(goBackButtonTimerIncrement, 1000);
 	document.addEventListener("click", goBackButtonResetIncrement, false);
 	document.addEventListener("dblclick", goBackButtonResetIncrement, false);
 	document.addEventListener("mousemove", goBackButtonResetIncrement, false);
+
+	// SETTING WHAT WILL HAPPEND WHEN THE USER CLICKS ON AN ELEMENT
 	document.getElementsByClassName("gui_goback")[0].addEventListener("click",function(event){goBack()});
 	document.getElementsByClassName("gui_goback_mobile")[0].addEventListener("click",function(event){goBack()});
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
