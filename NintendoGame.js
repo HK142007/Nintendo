@@ -656,12 +656,6 @@ window.addEventListener("load", function()
 	document.getElementsByClassName("gui_download")[0].title = STRING_SAVESTATE;
 	document.getElementsByClassName("gui_sound")[0].title = STRING_SOUND;
 
-	// SHOWING THE UPLOAD ICON
-	document.getElementsByClassName("gui_upload")[0].style.display = "block";
-
-	// SHOWING THE WELCOME WINDOW
-	document.getElementsByClassName("gui_window")[0].style.display = "block";
-
 	// TO KEEP TRACK OF MOUSE CLICKS AND MOVEMENTS WHEN PLAYING IN ORDER TO KNOW WHEN TO HIDE/SHOW ALL THE ICONS
 	setInterval(goBackButtonTimerIncrement, 1000);
 	document.addEventListener("click", goBackButtonResetIncrement, false);
