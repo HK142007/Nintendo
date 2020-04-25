@@ -662,7 +662,7 @@ window.addEventListener("load", function()
 	// SHOWING THE WELCOME WINDOW
 	document.getElementsByClassName("gui_window")[0].style.display = "block";
 
-	// TO KEEP TRACK OF THE CLICKS WHEN PLAYING A GAME IN ORDER TO HIDE THE GOBACK BUTTON
+	// TO KEEP TRACK OF MOUSE CLICKS AND MOVEMENTS WHEN PLAYING IN ORDER TO KNOW WHEN TO HIDE/SHOW ALL THE ICONS
 	setInterval(goBackButtonTimerIncrement, 1000);
 	document.addEventListener("click", goBackButtonResetIncrement, false);
 	document.addEventListener("dblclick", goBackButtonResetIncrement, false);
