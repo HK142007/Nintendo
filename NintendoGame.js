@@ -662,16 +662,18 @@ window.addEventListener("load", function()
 	document.addEventListener("dblclick", goBackButtonResetIncrement, false);
 	document.addEventListener("mousemove", goBackButtonResetIncrement, false);
 
-	// SETTING WHAT WILL HAPPEND WHEN THE USER CLICKS ON AN ELEMENT
-	document.getElementsByClassName("gui_goback")[0].addEventListener("click",function(event){goBack()});
-	document.getElementsByClassName("gui_goback_mobile")[0].addEventListener("click",function(event){goBack()});
+	// SETTING WHAT WILL HAPPEN WHEN THE USER CLICKS ON AN ELEMENT
 	document.getElementsByClassName("gui_upload")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file")[0].click()});
+	document.getElementsByClassName("gui_goback")[0].addEventListener("click",function(event){goBack()});
 	document.getElementsByClassName("gui_sound")[0].addEventListener("click",function(event){soundOffOn()});
-	document.getElementsByClassName("gui_sound_mobile")[0].addEventListener("click",function(event){soundOffOn()});
 	document.getElementsByClassName("gui_download")[0].addEventListener("click",function(event){downloadGameState()});
-	document.getElementsByClassName("gui_download_mobile")[0].addEventListener("click",function(event){downloadGameState()});
 	document.getElementsByClassName("gui_uploadsave")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file_state")[0].click()});
-	document.getElementsByClassName("gui_uploadsave_mobile")[0].addEventListener("click",function(event){document.getElementsByClassName("gui_file_state")[0].click()});
 	document.getElementsByClassName("gui_reload")[0].addEventListener("click",function(event){restartROM()});
-	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("click",function(event){restartROM()});
+
+	// SETTING WHAT WILL HAPPEN WHEN THE USER TOUCHES AN ELEMENT
+	document.getElementsByClassName("gui_goback_mobile")[0].addEventListener("touchstart",function(event){setTimeout(function(){goBack()},250)});
+	document.getElementsByClassName("gui_sound_mobile")[0].addEventListener("touchstart",function(event){soundOffOn()});
+	document.getElementsByClassName("gui_download_mobile")[0].addEventListener("touchstart",function(event){downloadGameState()});
+	document.getElementsByClassName("gui_uploadsave_mobile")[0].addEventListener("touchstart",function(event){document.getElementsByClassName("gui_file_state")[0].click()});
+	document.getElementsByClassName("gui_reload_mobile")[0].addEventListener("touchstart",function(event){restartROM()});
 	});
