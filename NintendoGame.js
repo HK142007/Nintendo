@@ -129,15 +129,22 @@ function goBack()
 		document.getElementsByClassName("gui_nintendo_keya")[0].style.display = "none";
 		document.getElementsByClassName("gui_nintendo_keyb")[0].style.display = "none";
 
+		// GETTING THE SOUND CONFIG (ON/OFF)
+		NintendoGameSoundInitialState = NintendoEmulator.opts.emulateSound;
+
 		// STOPING THE EMULATOR
 		NintendoEmulator.stop();
 
 		// IN SOME OLDER/SLOWER DEVICES IS NECESSARY TO WAIT A MOMENT IN ORDER TO THE BACKGROUND TO BE RENDERED.
-		// IF THERE IS NO TIMEOUT FOR RESTARTING THE EMULATOR INSTANCE, THE STRETCHING PROCESS THAT THE EMULATOR
+		// IF THERE IS NO TIMEOUT FOR RESTARTING THE EMULATOR, THE STRETCHING PROCESS THAT THE EMULATOR
 		// HAS TO FIT THE WINDOW WILL BE VISIBLE IN THOSE OLDER/SLOWER DEVICES.
 		setTimeout(function()
 			{
+			// RESTARTING THE EMULATOR
 			NintendoEmulator = new JSNES({"ui":JSNESUI()});
+
+			// RESTORING THE SOUND CONFIG (ON/OFF)
+			NintendoEmulator.opts.emulateSound = NintendoGameSoundInitialState;
 			}, 250);
 		}
 		catch(err)
