@@ -638,6 +638,26 @@ window.addEventListener("blur", function()
 		}
 	});
 
+window.addEventListener("touchstart", function()
+	{
+	// CHECKING IF A GAME IS RUNNING
+	if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+		{
+		// REQUESTING ENTER FULL SCREEN
+		parent.requestEnterFSMode();
+		}
+	});
+
+window.addEventListener("click", function()
+	{
+	// CHECKING IF A GAME IS RUNNING
+	if (document.getElementsByClassName("gui_background")[0].style.display=="none")
+		{
+		// REQUESTING ENTER FULL SCREEN
+		parent.requestEnterFSMode();
+		}
+	});
+
 window.addEventListener("focus", function()
 	{
 	try
