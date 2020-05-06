@@ -83,9 +83,6 @@ function goBack()
 	{
 	try
 		{
-		// REQUESTING EXIT FULL SCREEN
-		parent.requestExitFSMode();
-
 		// SHOWING THE BACKGROUND
 		document.getElementsByClassName("gui_background")[0].style.display = "block";
 
@@ -202,9 +199,6 @@ function loadROM(files)
 
 				// STARTING/RESTARING THE ROM
 				restartROM();
-
-				// REQUESTING ENTER FULL SCREEN
-				parent.requestEnterFSMode();
 
 				// CLEARING THE SELECTED FILE VALUE
 				document.getElementsByClassName("gui_file")[0].value = null;
@@ -638,26 +632,6 @@ window.addEventListener("blur", function()
 		}
 	});
 
-window.addEventListener("touchstart", function()
-	{
-	// CHECKING IF A GAME IS RUNNING
-	if (document.getElementsByClassName("gui_background")[0].style.display=="none")
-		{
-		// REQUESTING ENTER FULL SCREEN
-		parent.requestEnterFSMode();
-		}
-	});
-
-window.addEventListener("click", function()
-	{
-	// CHECKING IF A GAME IS RUNNING
-	if (document.getElementsByClassName("gui_background")[0].style.display=="none")
-		{
-		// REQUESTING ENTER FULL SCREEN
-		parent.requestEnterFSMode();
-		}
-	});
-
 window.addEventListener("focus", function()
 	{
 	try
@@ -667,9 +641,6 @@ window.addEventListener("focus", function()
 			{
 			// RESUMING THE GAME
 			NintendoEmulator.start();
-
-			// REQUESTING ENTER FULL SCREEN
-			parent.requestEnterFSMode();
 			}
 		}
 		catch(err)
