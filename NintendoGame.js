@@ -83,6 +83,9 @@ function goBack()
 	{
 	try
 		{
+		// REQUESTING EXIT FULL SCREEN
+		parent.requestExitFSMode();
+
 		// SHOWING THE BACKGROUND
 		document.getElementsByClassName("gui_background")[0].style.display = "block";
 
@@ -199,6 +202,9 @@ function loadROM(files)
 
 				// STARTING/RESTARING THE ROM
 				restartROM();
+
+				// REQUESTING ENTER FULL SCREEN
+				parent.requestEnterFSMode();
 
 				// CLEARING THE SELECTED FILE VALUE
 				document.getElementsByClassName("gui_file")[0].value = null;
@@ -641,6 +647,9 @@ window.addEventListener("focus", function()
 			{
 			// RESUMING THE GAME
 			NintendoEmulator.start();
+
+			// REQUESTING ENTER FULL SCREEN
+			parent.requestEnterFSMode();
 			}
 		}
 		catch(err)
