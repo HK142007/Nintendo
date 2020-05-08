@@ -47,8 +47,8 @@ var NintendoEmulator = new JSNES({"ui":JSNESUI()});
 
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
 
-var STRING_TITLE = "";
-var STRING_ABOUT = "";
+var STRING_HOW_MOBILE = "";
+var STRING_HOW_DESKTOP = "";
 var STRING_SELECTGAME = "";
 var STRING_LOADSTATE = "";
 var STRING_SAVESTATE = "";
@@ -58,8 +58,8 @@ var STRING_SOUND = "";
 
 if (userLanguage.substring(0,2)=="es")
 	{
-	STRING_TITLE = "Emulador de Nintendo";
-	STRING_ABOUT = "Desarrollado por <b>www.lrusso.com</b>";
+	STRING_HOW_MOBILE = "Toque el &iacute;cono inferior<br />y seleccione un ROM<br />para comenzar a jugar.";
+	STRING_HOW_DESKTOP = "START = S<br/>SELECT = A<br/>B, A = Z, X<br/><span class='gui_how_desktop_label_separator'></span>Haga click en el &iacute;cono inferior<br />y luego seleccione un ROM<br />para comenzar a jugar.";
 	STRING_SELECTGAME = "Seleccionar juego";
 	STRING_LOADSTATE = "Subir estado del juego";
 	STRING_SAVESTATE = "Descargar estado del juego";
@@ -69,8 +69,8 @@ if (userLanguage.substring(0,2)=="es")
 	}
 	else
 	{
-	STRING_TITLE = "Nintendo Emulator";
-	STRING_ABOUT = "Designed by <b>www.lrusso.com</b>";
+	STRING_HOW_MOBILE = "Touch the icon below<br />and select a ROM<br />to start playing.";
+	STRING_HOW_DESKTOP = "START = S<br/>SELECT = A<br/>B, A = Z, X<br/><span class='gui_how_desktop_label_separator'></span>Click in the icon below<br />and select a ROM<br />to start playing.";
 	STRING_SELECTGAME = "Select game";
 	STRING_LOADSTATE = "Upload game state";
 	STRING_SAVESTATE = "Download game state";
@@ -86,8 +86,18 @@ function goBack()
 		// SHOWING THE BACKGROUND
 		document.getElementsByClassName("gui_background")[0].style.display = "block";
 
-		// SHOWING THE WELCOME WINDOW
-		document.getElementsByClassName("gui_window")[0].style.display = "block";
+		// SHOWING THE EMULATOR TITLE
+		document.getElementsByClassName("gui_title")[0].style.display = "block";
+
+		// SHOWING THE HOW TO PLAY TEXT
+		if (isMobileDevice()==true)
+			{
+			document.getElementsByClassName("gui_how_mobile")[0].style.display = "block";
+			}
+			else
+			{
+			document.getElementsByClassName("gui_how_desktop")[0].style.display = "block";
+			}
 
 		// SHOWING THE UPLOAD ICON FOR DESKTOP COMPUTERS
 		document.getElementsByClassName("gui_upload")[0].style.display = "block";
@@ -197,6 +207,9 @@ function loadROM(files)
 					ROMDATA = ROMDATA + String.fromCharCode(RAWDATA[i]);
 					}
 
+				// CLEARING THE SELECTED FILE VALUE
+				document.getElementsByClassName("gui_title")[0].style.display = "none";
+
 				// STARTING/RESTARING THE ROM
 				restartROM();
 
@@ -220,8 +233,15 @@ function restartROM()
 		// HIDING THE BACKGROUND
 		document.getElementsByClassName("gui_background")[0].style.display = "none";
 
-		// HIDING THE WELCOME WINDOW
-		document.getElementsByClassName("gui_window")[0].style.display = "none";
+		// HIDING THE HOW TO PLAY TEXT
+		if (isMobileDevice()==true)
+			{
+			document.getElementsByClassName("gui_how_mobile")[0].style.display = "none";
+			}
+			else
+			{
+			document.getElementsByClassName("gui_how_desktop")[0].style.display = "none";
+			}
 
 		// SETTING THE FILE CONTENT FOR THE EMULATOR
 		NintendoEmulator.loadRom(ROMDATA);
@@ -653,15 +673,24 @@ window.addEventListener("load", function()
 	// BUGFIX FOR IOS
 	setInterval(function(){try{if (finalAudioContext.state==="suspended"){finalAudioContext.resume()}}catch(err){}},500);
 
-	// SETTING THE TEXT VALUES FOR THE WELCOME WINDOW AND ICON TOOLTIPS
-	document.getElementsByClassName("gui_window_title_value")[0].innerHTML = STRING_TITLE;
-	document.getElementsByClassName("gui_window_about")[0].innerHTML = STRING_ABOUT;
+	// SETTING THE TEXT VALUES FOR THE HOW TO PLAY AND ICON TOOLTIPS
 	document.getElementsByClassName("gui_upload")[0].title = STRING_SELECTGAME;
 	document.getElementsByClassName("gui_goback")[0].title = STRING_GOBACK;
 	document.getElementsByClassName("gui_reload")[0].title = STRING_RELOAD;
 	document.getElementsByClassName("gui_uploadsave")[0].title = STRING_LOADSTATE;
 	document.getElementsByClassName("gui_download")[0].title = STRING_SAVESTATE;
 	document.getElementsByClassName("gui_sound")[0].title = STRING_SOUND;
+	document.getElementsByClassName("gui_how_desktop_label")[0].innerHTML = STRING_HOW_DESKTOP;
+	document.getElementsByClassName("gui_how_mobile_label")[0].innerHTML = STRING_HOW_MOBILE;
+
+	if (isMobileDevice()==true)
+		{
+		document.getElementsByClassName("gui_how_mobile")[0].style.display = "block";
+		}
+		else
+		{
+		document.getElementsByClassName("gui_how_desktop")[0].style.display = "block";
+		}
 
 	// TO KEEP TRACK OF MOUSE CLICKS AND MOVEMENTS WHEN PLAYING IN ORDER TO KNOW WHEN TO HIDE/SHOW ALL THE ICONS
 	setInterval(goBackButtonTimerIncrement, 1000);
