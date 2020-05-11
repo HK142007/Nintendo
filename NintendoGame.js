@@ -65,7 +65,7 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_SAVESTATE = "Descargar estado del juego";
 	STRING_GOBACK = "Volver al men" + String.fromCharCode(250) + " principal";
 	STRING_RELOAD = "Recargar juego";
-	STRING_SOUND = "Sonido en juego";
+	STRING_SOUND = "Sonido en el juego";
 	}
 	else
 	{
