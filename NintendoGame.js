@@ -341,6 +341,9 @@ function downloadGameState()
 		// GETTING THE ROM NAME
 		var tempName = ROMNAME.replace(/\.[^/.]+$/, "") + ".state";
 
+		// IF RUNNING THE MOBILE APP, TELLING THE NAME THAT THE DOWNLOADED FILE WILL HAVE
+		console.log("FILENAME=" + tempName);
+
 		// DOWNLOADING THE GAME STATE
 		download_Blob(tempState, tempName, "application/octet-stream");
 		}
