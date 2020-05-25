@@ -56,6 +56,7 @@ var STRING_GOBACK = "";
 var STRING_RELOAD = "";
 var STRING_SOUND = "";
 var STRING_SAVED = "";
+var STRING_ERRORWITHEXTENSION = "";
 
 if (userLanguage.substring(0,2)=="es")
 	{
@@ -68,6 +69,7 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_RELOAD = "Recargar juego";
 	STRING_SOUND = "Sonido en el juego";
 	STRING_SAVED = "Archivo guardado en Descargas.";
+	STRING_ERRORWITHEXTENSION = "ERROR: Por favor verifique que el juego se encuentre en formato NES.";
 	}
 	else
 	{
@@ -80,6 +82,7 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_RELOAD = "Reload game";
 	STRING_SOUND = "Game sound";
 	STRING_SAVED = "File saved in Downloads.";
+	STRING_ERRORWITHEXTENSION = "ERROR: Please check that the game is in NES format.";
 	}
 
 function goBack()
@@ -228,6 +231,11 @@ function loadROM(files)
 
 			// READING THE FILE
 			filereader.readAsArrayBuffer(files[0]);
+			}
+			else
+			{
+			// SHOWING AN ALERT MESSAGE WITH THE COMPATIBLE FILE FORMAT
+			alert(STRING_ERRORWITHEXTENSION);
 			}
 		}
 		catch(err)
