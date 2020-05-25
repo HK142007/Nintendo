@@ -26,10 +26,10 @@ https://lrusso.github.io/Nintendo/Nintendo.htm
 
 * Remove clipping: The PPU.js file has a ScrollWrite function that implements a 7px clipping.
 
-## Based on the work of:
-
-https://github.com/bfirsh/jsnes
-
 ## Virtual joystick code:
 
 https://github.com/lrusso/VirtualJoystick
+
+## Based on the work of:
+
+https://github.com/bfirsh/jsnes
