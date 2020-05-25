@@ -55,6 +55,7 @@ var STRING_SAVESTATE = "";
 var STRING_GOBACK = "";
 var STRING_RELOAD = "";
 var STRING_SOUND = "";
+var STRING_SAVED = "";
 
 if (userLanguage.substring(0,2)=="es")
 	{
@@ -66,6 +67,7 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_GOBACK = "Volver al men" + String.fromCharCode(250) + " principal";
 	STRING_RELOAD = "Recargar juego";
 	STRING_SOUND = "Sonido en el juego";
+	STRING_SAVED = "Archivo guardado en Descargas.";
 	}
 	else
 	{
@@ -77,6 +79,7 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_GOBACK = "Go back to the main menu";
 	STRING_RELOAD = "Reload game";
 	STRING_SOUND = "Game sound";
+	STRING_SAVED = "File saved in Downloads.";
 	}
 
 function goBack()
@@ -134,6 +137,9 @@ function goBack()
 
 		// HIDING THE RELOAD ICON FOR MOBILE DEVICES
 		document.getElementsByClassName("gui_reload_mobile")[0].style.display = "none";
+
+		// HIDING THE 'FILE SAVED' LABEL
+		document.getElementsByClassName("gui_saved")[0].style.display = "none";
 
 		// HIDING THE VIRTUAL JOYSTICK AND BUTTONS FOR MOBILE DEVICES
 		document.getElementsByClassName("gui_joystick")[0].style.display = "none";
@@ -346,6 +352,15 @@ function downloadGameState()
 
 		// DOWNLOADING THE GAME STATE
 		download_Blob(tempState, tempName, "application/octet-stream");
+
+		// SHOWING THE 'FILE SAVED' LABEL
+		document.getElementsByClassName("gui_saved")[0].style.display = "block";
+
+		// HIDING THE 'FILE SAVED' LABEL AFTER THREE SECONDS
+		setTimeout(function()
+			{
+			document.getElementsByClassName("gui_saved")[0].style.display = "none";
+			}, 3000);
 		}
 		catch(err)
 		{
@@ -688,6 +703,7 @@ window.addEventListener("load", function()
 	document.getElementsByClassName("gui_sound")[0].title = STRING_SOUND;
 	document.getElementsByClassName("gui_how_desktop_label")[0].innerHTML = STRING_HOW_DESKTOP;
 	document.getElementsByClassName("gui_how_mobile_label")[0].innerHTML = STRING_HOW_MOBILE;
+	document.getElementsByClassName("gui_saved")[0].innerHTML = STRING_SAVED;
 
 	if (isMobileDevice()==true)
 		{

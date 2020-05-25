@@ -29,6 +29,7 @@
 				.gui_reload:hover{filter:brightness(110%)}
 				.gui_reload_mobile{display:none;position:fixed;right:5px;top:5px;width:86px;height:86px;background-color:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);font-family:Arial;font-size:35px;line-height:2.5;color:rgba(255,255,255,0.3);text-align:center;border-radius:50px;cursor:default;z-index:90}
 				.gui_reload_mobile_icon{width:86px;height:86px;background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AEFAyoQOyVIowAAAzhJREFUaN7Nmk9IFVEUxr+roobYP0klaRGYCYFFoQgqUqFBi1JKIizatGrnpoigXRFugijbSLUM2pSKkG0KnqaSkm5SK2mTRaSLkqA0fy2cB6bvvbnzZt5788Gs5px7vm/uvTPnnjNGAQKoknRUUqWkPZK2SyqUZCQtSpqXNCvpnaQXxpiJJOPkSeowxtzySzgbaARuA7N4xxzwAGgBsixj5gJ9QMQv+dPADMFhGrgA5FiQJ2kBQAPwmtThI3DGhbx3AUAe8JD04RFQsIZ877r7ES/kS4Fh0o8poBroiXEvIkk5FuQPSXomqUzpx15Jo4kMclzIH5D0SlKBQopEO75EUo9H8kgacWZsUtKccy1LKpZUKqlaUrOkekn5KVHlbNghD2v1B3AdKPUQYwtwFfia5P6IJBq823KQFeAusMPHw8oHOoG/gQgAaiwHWARaA5z1Jo8i4gp4aZkC7A94yfb5ngHguIXjL6A6w+TjCpiwcDwbAvIbBQBVFk6PQ0I+5pf4pEvMJUnXAnxbd0jaKmkwSf/J9U9kzEVxV1i/xgJ2WUxZbRi5R09BjS52X5wUIbQCKl3s+o0xhFlAuYvdTFiXf1TANhe7z2EXUOhiNxd2AW7rOy/sAn662JWFXcCCi93OsAt472J3MOwCplzsmoFNYU4lSixOQycUZlgc4gcywOkcsNvW+LJFQteURvL7gGXneuKaTAIVFgLGE1WPAyRvgIEY8YeAU3FL8Za1oHtpEHDFooLdHsuxwfI4dymF5FuAJQsO5+MN0GvhvAx0pIB8K/DHIv7bRMsounls0A3kBkA8G7jhVPpscMxtwE4P1YEZoM0H+Xpg1EO8Ltsn0u+xzDECXASKLcbPBdqA5x5jTAD/VbRNouqxpGGL4+Z6rDh+a8vrvyUVOUlhjVNi99pz+C6p3hgzbSXAEVHukCnKcKKwIOlIrL5ywt6sMeaDpFqtNqYzSb4p2aZ4dCY2+ywDJos31rmQhYgs4KaHV6xf3Hd+KQj8Y1MJPE0h8VGgLh3ZYh0wGCDxMaAdMOnO2SucVHwwiT7XJ+COn26PCVhMiaTD2vi7zYpWf7WZl/RN0rikIWOM73rTP/N51LezeviPAAAAAElFTkSuQmCC");background-repeat:no-repeat;background-position:17px center;opacity:0.3}
+				.gui_saved{position:absolute;bottom:30px;left:0;right:0;width:250px;margin:auto auto;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-family:Arial;font-size:14px;text-align:center;background-color:#d9edf7;border:1px solid #779ECB;color:#31708f;height:28px;line-height:1.9;z-index:70;cursor:default;-webkit-user-select:none;-moz-user-select:none;user-select:none;display:none}
 
 				.gui_file{display:none}
 				.gui_file_state{display:none}
@@ -138,6 +139,7 @@
 			<div class="gui_nintendo_keystart" oncontextmenu="return false;">START</div>
 			<div class="gui_nintendo_keyb" oncontextmenu="return false;">B</div>
 			<div class="gui_nintendo_keya" oncontextmenu="return false;">A</div>
+			<div class="gui_saved"></div>
 
 			<input class="gui_file" type="file" onchange="loadROM(event.target.files);"/>
 			<input class="gui_file_state" type="file" onchange="loadGameState(event.target.files);"/>
