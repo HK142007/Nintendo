@@ -447,6 +447,9 @@ function loadGameState(files)
 
 				// CLEARING THE SELECTED FILE VALUE
 				document.getElementsByClassName("gui_file_state")[0].value = null;
+
+				// HIDING THE 'FILE SAVED' LABEL (JUST IN CASE)
+				document.getElementsByClassName("gui_saved")[0].style.display = "none";
 				};
 			filereader.readAsText(files[0]);
 			}
