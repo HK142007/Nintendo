@@ -83,6 +83,9 @@ function goBack()
 	{
 	try
 		{
+		// TELLING TO THE MOBILE APP TO SHOW THE NAVIGATION BAR
+		console.log("SHOW_NAVIGATION_BAR");
+
 		// SHOWING THE BACKGROUND
 		document.getElementsByClassName("gui_background")[0].style.display = "block";
 
