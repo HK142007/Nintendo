@@ -31,7 +31,7 @@ https://lrusso.github.io/Nintendo
 | PLATFORM  | URL |
 | :------------ |:---------------|
 | Web | https://lrusso.github.io/Nintendo
-| Web Source | https://github.com/lrusso/Nintendo
+| Web Source | https://github.com/lrusso/Nintendo/source
 | Android APK | https://lrusso.github.io/Nintendo/Nintendo.apk
 | Android Source | https://github.com/lrusso/Nintendo/Android
 
