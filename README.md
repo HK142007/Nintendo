@@ -2,7 +2,7 @@
 
 Nintendo Emulator in JavaScript.
 
-![alt screenshot](https://raw.githubusercontent.com/lrusso/Nintendo/master/Nintendo1.png)
+![alt screenshot](https://raw.githubusercontent.com/lrusso/Nintendo/master/Nintendo.png)
 
 ## Web version
 
@@ -11,10 +11,6 @@ https://lrusso.github.io/Nintendo/Nintendo.htm
 ## Android version
 
 https://lrusso.github.io/Nintendo/Nintendo.apk
-
-## This Nintendo Emulator has mobile compatibility
-
-![alt screenshot](https://raw.githubusercontent.com/lrusso/Nintendo/master/Nintendo2.png)
 
 ## Main differences with JSNES
 
