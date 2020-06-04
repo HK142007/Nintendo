@@ -20,7 +20,7 @@ https://lrusso.github.io/Nintendo/Nintendo.apk
 * Load and save state features actually working.
 * Mobile compatibility (virtual joystick and buttons).
 * Pause and Resume automatically if the window is focused or not.
-* It is a Progressive Web App compatible with Android and iOS devices.
+* The Web version is a Progressive Web App compatible with Android and iOS devices.
 
 ## Roadmap
 
