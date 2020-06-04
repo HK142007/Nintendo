@@ -16,8 +16,8 @@ https://lrusso.github.io/Nintendo/Nintendo.apk
 
 * Sound button.
 * Restart button.
-* Audio working in Safari (MacOS and iOS).
-* Load and save state working (several bug fixes).
+* Audio working in Safari.
+* Load and save state features actually working.
 * Mobile compatibility (virtual joystick and buttons).
 * Pause and Resume automatically if the window is focused or not.
 * It is a Progressive Web App compatible with Android and iOS devices.
