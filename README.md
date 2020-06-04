@@ -4,9 +4,13 @@ Nintendo Emulator in JavaScript.
 
 ![alt screenshot](https://raw.githubusercontent.com/lrusso/Nintendo/master/Nintendo1.png)
 
-## Web
+## Web version
 
 https://lrusso.github.io/Nintendo
+
+## Android version
+
+https://lrusso.github.io/Nintendo/Nintendo.apk
 
 ## This Nintendo Emulator has mobile compatibility
 
@@ -25,15 +29,6 @@ https://lrusso.github.io/Nintendo
 ## Roadmap
 
 * Remove clipping: The PPU.js file has a ScrollWrite function that implements a 7px clipping.
-
-## Platforms and links
-
-| PLATFORM  | URL |
-| :------------ |:---------------|
-| Web | https://lrusso.github.io/Nintendo
-| Web Source | https://github.com/lrusso/Nintendo
-| Android APK | https://lrusso.github.io/Nintendo/Nintendo.apk
-| Android Source | https://github.com/lrusso/Nintendo/Android
 
 ## Virtual joystick code:
 
