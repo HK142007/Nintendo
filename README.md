@@ -6,7 +6,7 @@ Nintendo Emulator in JavaScript.
 
 ## Web version
 
-https://lrusso.github.io/Nintendo
+https://lrusso.github.io/Nintendo/Nintendo.htm
 
 ## Android version
 
