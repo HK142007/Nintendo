@@ -37,6 +37,8 @@ var JoyStick=function(t,e){var i=void 0===(e=e||{}).title?"joystick":e.title,n=v
 // isMobileDevice.js
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
+function alertCustom(title,message,accept){try{var alertContainer = document.createElement("div");alertContainer.style.position = "fixed";alertContainer.style.top = 0;alertContainer.style.bottom = 0;alertContainer.style.left = 0;alertContainer.style.right = 0;alertContainer.style.zIndex = 9999;alertContainer.style.backgroundColor = "rgba(0,0,0,0.5)";var alertForm = document.createElement("div");alertForm.style.position = "relative";alertForm.style.top = "50%";alertForm.style.left = 0;alertForm.style.right = 0;alertForm.style.marginLeft = "auto";alertForm.style.marginRight = "auto";alertForm.style.transform = "translateY(-50%)";alertForm.style.width = "300px";alertForm.style.backgroundColor = "#f2f2f2";alertForm.style.textAlign = "center";var alertTitle = document.createElement("div");alertTitle.style.textAlign = "left";alertTitle.style.paddingLeft = "10px";alertTitle.style.backgroundColor = "#3a76b1";alertTitle.style.fontFamily = "Arial";alertTitle.style.fontSize = "16px";alertTitle.style.fontWeight = "bold";alertTitle.style.color = "white";alertTitle.style.lineHeight = 2.5;alertTitle.innerHTML = title;var alertMessage = document.createElement("div");alertMessage.style.padding = "20px";alertMessage.style.fontFamily = "Arial";alertMessage.style.fontSize = "16px";alertMessage.style.color = "black";alertMessage.style.textAlign = "center";alertMessage.style.lineHeight = 2;alertMessage.innerHTML = message;var alertButton = document.createElement("div");alertButton.style.padding = "10px";alertButton.style.backgroundColor = "#d2d2d2";alertButton.style.border = "1px solid #b2b2b2";alertButton.style.fontFamily = "Arial";alertButton.style.fontSize = "16px";alertButton.style.color = "black";alertButton.style.textAlign = "center";alertButton.style.lineHeight = 1.5;alertButton.style.display = "inline-block";alertButton.style.marginBottom = "10px";alertButton.style.paddingLeft = "40px";alertButton.style.paddingRight = "40px";alertButton.style.cursor = "pointer";alertButton.addEventListener("click",function(event){document.body.removeChild(alertContainer);});alertButton.innerHTML = accept;alertForm.appendChild(alertTitle);alertForm.appendChild(alertMessage);alertForm.appendChild(alertButton);alertContainer.appendChild(alertForm);document.body.appendChild(alertContainer);}catch(err){}}
+
 var ROMDATA = null;
 var ROMNAME = null;
 var CTRLS_IDLE = 0;
@@ -56,7 +58,9 @@ var STRING_GOBACK = "";
 var STRING_RELOAD = "";
 var STRING_SOUND = "";
 var STRING_SAVED = "";
-var STRING_ERRORWITHEXTENSION = "";
+var STRING_ERROREXTENSION_TITLE = "";
+var STRING_ERROREXTENSION_MESSAGE = "";
+var STRING_ERROREXTENSION_ACCEPT = "";
 
 if (userLanguage.substring(0,2)=="es")
 	{
@@ -69,7 +73,9 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_RELOAD = "Recargar juego";
 	STRING_SOUND = "Sonido en el juego";
 	STRING_SAVED = "Archivo guardado en Descargas.";
-	STRING_ERRORWITHEXTENSION = "ERROR: Por favor verifique que el juego se encuentre en formato NES.";
+	STRING_ERROREXTENSION_TITLE = "MENSAJE";
+	STRING_ERROREXTENSION_MESSAGE = "Por favor verifique que el juego<br />se encuentre en formato NES.";
+	STRING_ERROREXTENSION_ACCEPT = "Aceptar";
 	}
 	else
 	{
@@ -82,7 +88,9 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_RELOAD = "Reload game";
 	STRING_SOUND = "Game sound";
 	STRING_SAVED = "File saved in Downloads.";
-	STRING_ERRORWITHEXTENSION = "ERROR: Please check that the game is in NES format.";
+	STRING_ERROREXTENSION_TITLE = "MESSAGE";
+	STRING_ERROREXTENSION_MESSAGE = "Please check that the game file<br /> is in NES format.";
+	STRING_ERROREXTENSION_ACCEPT = "OK";
 	}
 
 function goBack()
@@ -234,8 +242,11 @@ function loadROM(files)
 			}
 			else
 			{
+			// CLEARING THE SELECTED FILE VALUE
+			document.getElementsByClassName("gui_file")[0].value = null;
+
 			// SHOWING AN ALERT MESSAGE WITH THE COMPATIBLE FILE FORMAT
-			alert(STRING_ERRORWITHEXTENSION);
+			alertCustom(STRING_ERROREXTENSION_TITLE,STRING_ERROREXTENSION_MESSAGE,STRING_ERROREXTENSION_ACCEPT);
 			}
 		}
 		catch(err)
