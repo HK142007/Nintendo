@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Nintendo</string>
-    <string name="text_error_extension_title">Mensaje</string>
-    <string name="text_error_extension_message">Por favor verifique que el juego se encuentre en formato NES.</string>
-    <string name="textOK">Aceptar</string>
-</resources>
