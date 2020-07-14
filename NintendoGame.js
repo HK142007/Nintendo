@@ -46,6 +46,7 @@ var NintendoJoystick = null;
 var NintendoGameState = null;
 var NintendoGameSoundInitialState = null;
 var NintendoEmulator = new JSNES({"ui":JSNESUI()});
+var mySavedGameLabelTimeout;
 
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
 
@@ -375,8 +376,11 @@ function downloadGameState()
 		// SHOWING THE 'FILE SAVED' LABEL
 		document.getElementsByClassName("gui_saved")[0].style.display = "block";
 
+		// CLEARING THE PREVIOUS TIMEOUT FOR HIDING THE 'FILE SAVED' LABEL (IF ANY)
+		try{clearTimeout(mySavedGameLabelTimeout)}catch(err){}
+
 		// HIDING THE 'FILE SAVED' LABEL AFTER THREE SECONDS
-		setTimeout(function()
+		mySavedGameLabelTimeout = setTimeout(function()
 			{
 			document.getElementsByClassName("gui_saved")[0].style.display = "none";
 			}, 3000);
