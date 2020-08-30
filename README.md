@@ -1,6 +1,6 @@
 # Nintendo
 
-Nintendo Emulator in JavaScript.
+Nintendo Emulator developed in JavaScript.
 
 ![alt screenshot](https://raw.githubusercontent.com/lrusso/Nintendo/master/Nintendo.png)
 
